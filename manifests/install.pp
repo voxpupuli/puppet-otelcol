@@ -8,6 +8,12 @@ class otelcol::install {
 
   case $facts['os']['family'] {
     'Debian': {
+      archive { "/tmp/otelcol-${otelcol::archive_version}":
+        ensure => present,
+        source => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.74.0/otelcol-contrib_0.74.0_linux_amd64.deb',
+        user   => 0,
+        group  => 0,
+      }
     }
     'RedHat': {
     }
