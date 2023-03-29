@@ -23,7 +23,6 @@ describe 'otelcol' do
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('otelcol::config') }
       it { is_expected.to contain_class('otelcol::install') }
-      it { is_expected.to contain_class('otelcol::params') }
       it { is_expected.to contain_class('otelcol::service') }
 
       it do
