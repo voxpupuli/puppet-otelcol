@@ -17,16 +17,16 @@ class otelcol::config inherits otelcol {
   }
 
   file { 'otelcol-config' :
-    path    => $otelcol::config_file,
     ensure  => 'file',
+    path    => $otelcol::config_file,
     content => template('otelcol/config.yml.erb'),
     owner   => $otelcol::config_file_owner,
     group   => $otelcol::config_file_group,
     mode    => $otelcol::config_file_mode,
   }
   file { 'otelcol-environment' :
-    path    =>  $otelcol::environment_file,
     ensure  => 'file',
+    path    => $otelcol::environment_file,
     content => template('otelcol/environment.conf.erb'),
     owner   => $otelcol::config_file_owner,
     group   => $otelcol::config_file_group,
