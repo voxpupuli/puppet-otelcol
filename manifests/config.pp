@@ -13,23 +13,23 @@ class otelcol::config inherits otelcol {
     'service' => {
       'extensions' => $otelcol::extensions.keys(),
       'pipelines' => $otelcol::pipelines,
-    }
+    },
   }
 
-  file { $otelcol::config_file:
+  file { 'otelcol-config' :
+    path    => $otelcol::config_file,
     ensure  => 'file',
-    content => template('otelcol/otelcol.conf.erb'),
+    content => template('otelcol/config.yml.erb'),
     owner   => $otelcol::config_file_owner,
     group   => $otelcol::config_file_group,
     mode    => $otelcol::config_file_mode,
   }
-
-  # file { $otelcol::config_folder:
-  #   owner   => $otelcol::config_file_owner,
-  #   group   => $otelcol::config_file_group,
-  #   mode    => $otelcol::config_folder_mode,
-  #   purge   => $otelcol::purge_config_fragments,
-  #   recurse => true,
-  #   ensure => 'directory',
-  # }
+  file { 'otelcol-environment' :
+    path    =>  $otelcol::environment_file,
+    ensure  => 'file',
+    content => template('otelcol/environment.conf.erb'),
+    owner   => $otelcol::config_file_owner,
+    group   => $otelcol::config_file_group,
+    mode    => $otelcol::config_file_mode,
+  }
 }
