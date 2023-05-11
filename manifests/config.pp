@@ -6,7 +6,7 @@ class otelcol::config inherits otelcol {
   assert_private()
 
   $settings = {
-    'recievers' => $otelcol::receivers,
+    'receivers' => $otelcol::receivers,
     'processors' => $otelcol::processors,
     'exporters' => $otelcol::exporters,
     'extensions' => $otelcol::extensions,
