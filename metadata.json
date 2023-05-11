@@ -6,7 +6,10 @@
   "license": "Apache-2.0",
   "source": "https://github.com/apa-it/puppet-otelcol",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 8.0.0 < 9.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
@@ -60,10 +63,10 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 8.0.0"
+      "version_requirement": ">= 6.21.0 < 9.0.0"
     }
   ],
-  "pdk-version": "2.7.0",
+  "pdk-version": "2.7.1",
   "template-url": "https://github.com/puppetlabs/pdk-templates#main",
-  "template-ref": "heads/main-0-gc6d4446"
+  "template-ref": "heads/main-0-gd05508f"
 }
