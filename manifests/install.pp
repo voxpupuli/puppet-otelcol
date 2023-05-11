@@ -6,31 +6,26 @@
 class otelcol::install {
   assert_private()
 
-  case $facts['os']['family'] {
-    'Debian': {
-      archive { "/tmp/otelcol-${otelcol::archive_version}":
-        ensure => present,
-        source => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.74.0/otelcol-contrib_0.74.0_linux_amd64.deb',
-        user   => 0,
-        group  => 0,
+  if $otelcol::manage_archive {
+    case $facts['os']['family'] {
+      'Debian': {
+        $package_source = "${otelcol::archive_location}.deb"
       }
-    }
-    'RedHat': {
-    }
-    'windows': {
-      # repo is not applicable to windows
-    }
-    default: {
-      fail('Only RedHat, CentOS, OracleLinux, Debian, Ubuntu and Windows repositories are supported at this time')
+      'RedHat': {
+        $package_source = "${otelcol::archive_location}.rpm"
+      }
+      default: {
+        fail('Only RedHat, CentOS, OracleLinux, Debian, Ubuntu repositories are supported at this time')
+      }
     }
   }
+  else {
+    $package_source = undef
+  }
 
-  if ! $otelcol::manage_archive {
-    ensure_packages([$otelcol::package_name],
-      {
-        ensure          => $otelcol::package_ensure,
-        # install_options => $otelcol::install_options,
-      }
-    )
+  package { 'otelcol':
+    ensure => $otelcol::package_ensure,
+    name   => $otelcol::package_name,
+    source => $package_source,
   }
 }
