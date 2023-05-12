@@ -6,30 +6,30 @@ class otelcol::config inherits otelcol {
   assert_private()
 
   $settings = {
-    'recievers' => $otelcol::receivers,
+    'receivers' => $otelcol::receivers,
     'processors' => $otelcol::processors,
     'exporters' => $otelcol::exporters,
     'extensions' => $otelcol::extensions,
     'service' => {
       'extensions' => $otelcol::extensions.keys(),
       'pipelines' => $otelcol::pipelines,
-    }
+    },
   }
 
-  file { $otelcol::config_file:
+  file { 'otelcol-config' :
     ensure  => 'file',
-    content => template('otelcol/otelcol.conf.erb'),
+    path    => $otelcol::config_file,
+    content => template('otelcol/config.yml.erb'),
     owner   => $otelcol::config_file_owner,
     group   => $otelcol::config_file_group,
     mode    => $otelcol::config_file_mode,
   }
-
-  # file { $otelcol::config_folder:
-  #   owner   => $otelcol::config_file_owner,
-  #   group   => $otelcol::config_file_group,
-  #   mode    => $otelcol::config_folder_mode,
-  #   purge   => $otelcol::purge_config_fragments,
-  #   recurse => true,
-  #   ensure => 'directory',
-  # }
+  file { 'otelcol-environment' :
+    ensure  => 'file',
+    path    => $otelcol::environment_file,
+    content => template('otelcol/environment.conf.erb'),
+    owner   => $otelcol::config_file_owner,
+    group   => $otelcol::config_file_group,
+    mode    => $otelcol::config_file_mode,
+  }
 }

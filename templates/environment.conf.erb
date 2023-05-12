@@ -1,0 +1,6 @@
+# File Managed by Puppet
+# Systemd environment file for the <%= scope.lookupvar('otelcol::package_name')%> service
+
+# Command-line options for the <%= scope.lookupvar('otelcol::package_name')%>  service.
+# Run `/usr/bin/<%= scope.lookupvar('otelcol::package_name') %>  --help` to see all available options.
+OTELCOL_OPTIONS="<%= scope.lookupvar('otelcol::run_options')%> --config=<%= scope.lookupvar('otelcol::config_file')%>"

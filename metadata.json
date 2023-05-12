@@ -1,58 +1,72 @@
 {
-  "name": "cyberkov-otelcol",
+  "name": "apa-otelcol",
   "version": "0.1.0",
-  "author": "Hannes Schaller",
-  "summary": "",
+  "author": "APA-IT",
+  "summary": "Installs and Manages Open Telemetry Collector",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/apa-it/puppet-otelcol",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 8.0.0 < 9.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "8"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Scientific",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "10"
+        "10",
+        "11"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "18.04"
+        "18.04",
+        "20.04",
+        "22.04"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 8.0.0"
+      "version_requirement": ">= 6.21.0 < 9.0.0"
     }
   ],
-  "pdk-version": "2.7.0",
+  "pdk-version": "2.7.1",
   "template-url": "https://github.com/puppetlabs/pdk-templates#main",
-  "template-ref": "heads/main-0-gc6d4446"
+  "template-ref": "heads/main-0-gd05508f"
 }
