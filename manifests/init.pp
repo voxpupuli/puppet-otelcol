@@ -1,6 +1,6 @@
 class otelcol (
   String  $package_name                          = 'otelcol',
-  Stdlib::Ensure::Package  $package_ensure       = 'installed',
+  Enum['present','absent','installed','latest']  $package_ensure       = 'installed',
   String  $environment_file                      = "/etc/${package_name}/${package_name}.conf",
   Optional[String]  $run_options                 = undef,
   String  $config_file                           = "/etc/${package_name}/config.yaml",
