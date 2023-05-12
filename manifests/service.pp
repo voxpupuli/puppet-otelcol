@@ -2,13 +2,13 @@
 #
 # @example Make sure Otelcol is running
 #   include 'otelcol::service'
-# 
+#
 # @example Disable otelcol service
 #  class { 'otelcol::service':
 #    ensure => stopped,
 #  }
 #
-# @param ensure 
+# @param ensure
 #   Ensure service status
 #
 # @api private
@@ -23,9 +23,10 @@ class otelcol::service (
   #   content  => epp('otelcol/otelcol.dropin.epp'),
   #   filename => 'otelcol_override.conf',
   # }
-  # ~> 
+  # ~>
   service { 'otelcol':
-    ensure  => $ensure,
-    require => Package['otelcol'],
+    ensure    => $ensure,
+    require   => Package['otelcol'],
+    subscribe => [ File['otelcol-config'], File['otelcol-environment'] ],
   }
 }
