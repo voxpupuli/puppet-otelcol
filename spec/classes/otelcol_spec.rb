@@ -55,7 +55,7 @@ describe 'otelcol' do
       }
       it {
         is_expected.to contain_class('otelcol::service')
-        is_expected.to contain_service('otelcol').with_ensure('running')
+        is_expected.to contain_service('otelcol').with_ensure('running').with_name('otelcol')
       }
       context 'with package_name to otelcol-contrib' do
         let :params do
@@ -81,6 +81,7 @@ describe 'otelcol' do
           is_expected.to contain_class('otelcol::install')
           is_expected.to contain_package('otelcol').with_ensure('installed')
           is_expected.to contain_package('otelcol').with_name('otelcol-contrib')
+          is_expected.to contain_service('otelcol').with_name('otelcol-contrib')
         }
 
         context 'with manage archive' do

@@ -26,6 +26,7 @@ class otelcol::service (
   # ~>
   service { 'otelcol':
     ensure    => $ensure,
+    name      => $otelcol::service_name,
     require   => Package['otelcol'],
     subscribe => [ File['otelcol-config'], File['otelcol-environment'] ],
   }
