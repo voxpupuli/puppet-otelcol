@@ -1,10 +1,12 @@
 {
-  "name": "apa-otelcol",
-  "version": "1.0.0",
-  "author": "APA-IT",
+  "name": "puppet-otelcol",
+  "version": "1.0.0-rc0",
+  "author": "Vox Pupuli",
   "summary": "Installs and Manages Open Telemetry Collector",
   "license": "Apache-2.0",
-  "source": "https://github.com/apa-it/puppet-otelcol",
+  "source": "https://github.com/voxpupuli/puppet-otelcol",
+  "project_page": "https://github.com/voxpupuli/puppet-otelcol",
+  "issues_url": "https://github.com/voxpupuli/puppet-otelcol/issues",
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -63,7 +65,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.21.0 < 9.0.0"
+      "version_requirement": ">= 7.0.0 < 8.0.0"
     }
   ],
   "pdk-version": "2.7.1",
