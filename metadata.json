@@ -1,6 +1,6 @@
 {
   "name": "apa-otelcol",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "APA-IT",
   "summary": "Installs and Manages Open Telemetry Collector",
   "license": "Apache-2.0",
