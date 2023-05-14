@@ -9,16 +9,6 @@ describe 'otelcol' do
         facts
       end
 
-      let(:config_dir) do
-        case facts[:osfamily]
-        when 'windows'
-          'C:/Program Files/otelcol'
-        else
-          '/etc/otelcol'
-        end
-      end
-      let(:main_config) { "#{config_dir}/config.yaml" }
-
       let(:configcontent) do
         {
           'receivers' => {
@@ -40,29 +30,36 @@ describe 'otelcol' do
         }
       end
 
-      context 'default include'
-      it { is_expected.to compile.with_all_deps }
-      it {
-        is_expected.to contain_class('otelcol::config')
-        is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol/config.yaml')
-        is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol/otelcol.conf')
-        is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/config.yaml"})
-      }
-      it {
-        is_expected.to contain_class('otelcol::install')
-        is_expected.to contain_package('otelcol').with_ensure('installed')
-        is_expected.to contain_package('otelcol').with_name('otelcol')
-      }
-      it {
-        is_expected.to contain_class('otelcol::service')
-        is_expected.to contain_service('otelcol').with_ensure('running').with_name('otelcol')
-      }
+      context 'default include' do
+        it { is_expected.to compile.with_all_deps }
+
+        it {
+          is_expected.to contain_class('otelcol::config')
+          is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol/config.yaml')
+          is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol/otelcol.conf')
+          is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/config.yaml"})
+        }
+
+        it {
+          is_expected.to contain_class('otelcol::install')
+          is_expected.to contain_package('otelcol').with_ensure('installed')
+          is_expected.to contain_package('otelcol').with_name('otelcol')
+        }
+
+        it {
+          is_expected.to contain_class('otelcol::service')
+          is_expected.to contain_service('otelcol').with_ensure('running').with_name('otelcol')
+        }
+      end
+
       context 'with package_name to otelcol-contrib' do
         let :params do
           {
             package_name: 'otelcol-contrib',
           }
         end
+
+        it { is_expected.to compile.with_all_deps }
 
         it {
           is_expected.to contain_class('otelcol::config')
@@ -72,11 +69,13 @@ describe 'otelcol' do
           is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol-contrib/otelcol-contrib.conf')
           is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol-contrib/config.yaml"})
         }
+
         it { # Validate vaild YAML for config
           is_expected.to contain_file('otelcol-config').with_content(configcontent.to_yaml)
           # yaml_object = YAML.load(catalogue.resource('file', 'otelcol-config').send(:parameters)[:content])
           # expect(yaml_object.length).to be > 0
         }
+
         it {
           is_expected.to contain_class('otelcol::install')
           is_expected.to contain_package('otelcol').with_ensure('installed')
@@ -101,8 +100,10 @@ describe 'otelcol' do
             end
           end
 
+          it { is_expected.to compile.with_all_deps }
+
           it {
-            is_expected.to contain_package('otelcol').with_source("#{package_source}")
+            is_expected.to contain_package('otelcol').with_source(package_source.to_s)
           }
         end
       end
@@ -114,6 +115,7 @@ describe 'otelcol' do
           }
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_package('otelcol').with_ensure('latest') }
       end
 
@@ -124,6 +126,7 @@ describe 'otelcol' do
           }
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol/env.conf') }
       end
 
@@ -134,6 +137,7 @@ describe 'otelcol' do
           }
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-environment').with_content(%r{--debug}) }
       end
 
@@ -143,6 +147,8 @@ describe 'otelcol' do
             config_file: '/etc/otelcol/test.conf',
           }
         end
+
+        it { is_expected.to compile.with_all_deps }
 
         it {
           is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol/test.conf')
@@ -159,25 +165,14 @@ describe 'otelcol' do
           }
         end
 
+        it { is_expected.to compile.with_all_deps }
+
         it {
           is_expected.to contain_file('otelcol-config').with(
             'owner' => 'root',
             'group' => 'root',
-            'mode'  => '0600',
+            'mode'  => '0600'
           )
-        }
-      end
-
-      context 'with config_file' do
-        let :params do
-          {
-            config_file: '/etc/otelcol/test.conf',
-          }
-        end
-
-        it {
-          is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol/test.conf')
-          is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/test.conf"})
         }
       end
 
@@ -193,6 +188,7 @@ describe 'otelcol' do
           configcontent.merge({ 'receivers' => { 'test' => {} } })
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
       end
 
@@ -208,6 +204,7 @@ describe 'otelcol' do
           configcontent.merge({ 'processors' => { 'test' => {} } })
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
       end
 
@@ -223,6 +220,7 @@ describe 'otelcol' do
           configcontent.merge({ 'exporters' => { 'test' => {} } })
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
       end
 
@@ -241,10 +239,11 @@ describe 'otelcol' do
                 'extensions' => [],
                 'pipelines' => { 'test' => {} }
               },
-            },
+            }
           )
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
       end
 
@@ -264,10 +263,11 @@ describe 'otelcol' do
                 'extensions' => ['test'],
                 'pipelines' => {}
               },
-            },
+            }
           )
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
       end
 
@@ -278,6 +278,7 @@ describe 'otelcol' do
           }
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.to contain_service('otelcol').with_ensure('stopped') }
       end
 
@@ -288,6 +289,7 @@ describe 'otelcol' do
           }
         end
 
+        it { is_expected.to compile.with_all_deps }
         it { is_expected.not_to contain_class('otelcol::service') }
       end
 
@@ -307,8 +309,10 @@ describe 'otelcol' do
           end
         end
 
+        it { is_expected.to compile.with_all_deps }
+
         it {
-          is_expected.to contain_package('otelcol').with_source("#{package_source}")
+          is_expected.to contain_package('otelcol').with_source(package_source.to_s)
         }
       end
 
@@ -329,8 +333,10 @@ describe 'otelcol' do
           end
         end
 
+        it { is_expected.to compile.with_all_deps }
+
         it {
-          is_expected.to contain_package('otelcol').with_source("#{package_source}")
+          is_expected.to contain_package('otelcol').with_source(package_source.to_s)
         }
       end
     end
