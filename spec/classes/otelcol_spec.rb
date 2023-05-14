@@ -25,6 +25,13 @@ describe 'otelcol' do
           'service' => {
             'extensions' => [],
             'pipelines' => {},
+            'telemetry' => {
+              'logs' => {},
+              'metrics' => {
+                'level' => 'basic',
+                'address' => ':8888',
+              },
+            },
           },
 
         }
@@ -171,7 +178,7 @@ describe 'otelcol' do
           is_expected.to contain_file('otelcol-config').with(
             'owner' => 'root',
             'group' => 'root',
-            'mode'  => '0600'
+            'mode'  => '0600',
           )
         }
       end
@@ -237,9 +244,16 @@ describe 'otelcol' do
             {
               'service' => {
                 'extensions' => [],
-                'pipelines' => { 'test' => {} }
+                'pipelines' => { 'test' => {} },
+                'telemetry' => {
+                  'logs' => {},
+                  'metrics' => {
+                    'level' => 'basic',
+                    'address' => ':8888',
+                  },
+                },
               },
-            }
+            },
           )
         end
 
@@ -261,8 +275,79 @@ describe 'otelcol' do
               'extensions' => { 'test' => {} },
               'service' => {
                 'extensions' => ['test'],
-                'pipelines' => {}
-              },
+                'pipelines' => {},
+                'telemetry' => {
+                  'logs' => {},
+                  'metrics' => {
+                    'level' => 'basic',
+                    'address' => ':8888',
+                  },
+                },
+              }
+            }
+          )
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+      end
+
+      context 'with logoptions' do
+        let :params do
+          {
+            log_options: {
+              'level' => 'debug',
+            },
+          }
+        end
+        let(:configcontent_ext) do
+          configcontent.merge(
+            {
+              'extensions' => {},
+              'service' => {
+                'extensions' => [],
+                'pipelines' => {},
+                'telemetry' => {
+                  'logs' => {
+                    'level' => 'debug'
+                  },
+                  'metrics' => {
+                    'level' => 'basic',
+                    'address' => ':8888',
+                  },
+                },
+              }
+            }
+          )
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+      end
+
+      context 'with metrics config' do
+        let :params do
+          {
+            metrics_level: 'detailed',
+            metrics_address_host: '127.0.0.1',
+            metrics_address_port: 1234,
+          }
+        end
+        let(:configcontent_ext) do
+          configcontent.merge(
+            {
+              'extensions' => {},
+              'service' => {
+                'extensions' => [],
+                'pipelines' => {},
+                'telemetry' => {
+                  'logs' => {},
+                  'metrics' => {
+                    'level' => 'detailed',
+                    'address' => '127.0.0.1:1234',
+                  },
+                },
+              }
             }
           )
         end

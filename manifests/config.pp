@@ -13,6 +13,13 @@ class otelcol::config inherits otelcol {
     'service' => {
       'extensions' => $otelcol::extensions.keys(),
       'pipelines' => $otelcol::pipelines,
+      'telemetry' => {
+        'logs' => $otelcol::log_options,
+        'metrics' => {
+          'level' => $otelcol::metrics_level,
+          'address' => "${otelcol::metrics_address_host}:${otelcol::metrics_address_port}",
+        },
+      },
     },
   }
 
