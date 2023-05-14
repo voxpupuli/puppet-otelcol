@@ -178,7 +178,7 @@ describe 'otelcol' do
           is_expected.to contain_file('otelcol-config').with(
             'owner' => 'root',
             'group' => 'root',
-            'mode'  => '0600',
+            'mode'  => '0600'
           )
         }
       end
@@ -253,7 +253,7 @@ describe 'otelcol' do
                   },
                 },
               },
-            },
+            }
           )
         end
 
