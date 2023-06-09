@@ -22,6 +22,7 @@ describe 'Otelcol class' do
       it { is_expected.to be_running }
     end
   end
+
   context 'otelcol-contib', 'init.pp' do
     # Using puppet_apply as a helper
     # it_behaves_like 'init', 'init.pp'
