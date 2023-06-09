@@ -9,7 +9,7 @@ describe 'Otelcol class' do
     it 'works idempotently with no errors' do
       pp = <<-EOS
       class { 'otelcol':
-        $manage_archive => true
+        manage_archive => true
       }
       EOS
       # Run it twice and test for idempotency
@@ -30,8 +30,8 @@ describe 'Otelcol class' do
     it 'works idempotently with no errors' do
       pp = <<-EOS
       class { 'otelcol':
-        $package_name => 'otelcol-contrib',
-        $manage_archive => true
+        package_name => 'otelcol-contrib',
+        manage_archive => true
       }
       EOS
       # Run it twice and test for idempotency
