@@ -63,6 +63,8 @@ describe 'otelcol' do
         let :params do
           {
             package_name: 'otelcol-contrib',
+            config_file_owner: 'otelcol-contrib',
+            config_file_group: 'otelcol-contrib',
           }
         end
 
@@ -94,6 +96,8 @@ describe 'otelcol' do
           let :params do
             {
               package_name: 'otelcol-contrib',
+              config_file_owner: 'otelcol-contrib',
+              config_file_group: 'otelcol-contrib',
               manage_archive: true,
             }
           end
@@ -101,17 +105,18 @@ describe 'otelcol' do
           let(:package_source) do
             case facts[:osfamily]
             when 'Debian'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.77.0/otelcol-contrib_0.77.0_linux_amd64.deb'
+              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol-contrib_0.79.0_linux_amd64.deb'
             when 'RedHat'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.77.0/otelcol-contrib_0.77.0_linux_amd64.rpm'
+              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol-contrib_0.79.0_linux_amd64.rpm'
             end
+          end
+          let(:package_localpath) do
+            "/tmp/#{package_source.split('/').last}"
           end
 
           it { is_expected.to compile.with_all_deps }
-
-          it {
-            is_expected.to contain_package('otelcol').with_source(package_source.to_s)
-          }
+          it { is_expected.to contain_file('otelcol_package').with_source(package_source.to_s) }
+          it { is_expected.to contain_package('otelcol').with_source(package_localpath.to_s) }
         end
       end
 
@@ -420,17 +425,18 @@ describe 'otelcol' do
         let(:package_source) do
           case facts[:osfamily]
           when 'Debian'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.77.0/otelcol_0.77.0_linux_amd64.deb'
+            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol_0.79.0_linux_amd64.deb'
           when 'RedHat'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.77.0/otelcol_0.77.0_linux_amd64.rpm'
+            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol_0.79.0_linux_amd64.rpm'
           end
+        end
+        let(:package_localpath) do
+          "/tmp/#{package_source.split('/').last}"
         end
 
         it { is_expected.to compile.with_all_deps }
-
-        it {
-          is_expected.to contain_package('otelcol').with_source(package_source.to_s)
-        }
+        it { is_expected.to contain_file('otelcol_package').with_source(package_source.to_s) }
+        it { is_expected.to contain_package('otelcol').with_source(package_localpath.to_s) }
       end
 
       context 'manage archive with Version' do
@@ -449,12 +455,13 @@ describe 'otelcol' do
             'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.74.0/otelcol_0.74.0_linux_amd64.rpm'
           end
         end
+        let(:package_localpath) do
+          "/tmp/#{package_source.split('/').last}"
+        end
 
         it { is_expected.to compile.with_all_deps }
-
-        it {
-          is_expected.to contain_package('otelcol').with_source(package_source.to_s)
-        }
+        it { is_expected.to contain_file('otelcol_package').with_source(package_source.to_s) }
+        it { is_expected.to contain_package('otelcol').with_source(package_localpath.to_s) }
       end
     end
   end
