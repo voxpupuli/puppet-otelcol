@@ -27,8 +27,9 @@ class otelcol (
   Stdlib::Ensure::Service  $service_ensure       = 'running',
   Boolean $manage_service                        = true,
   Boolean $manage_archive                        = false,
+  String[1] $localpath_archive                   = '/tmp',
   # Boolean $manage_user                           = false,
-  String[1] $archive_version                     = '0.77.0',
+  String[1] $archive_version                     = '0.79.0',
   String[1] $archive_location          = "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64",
 ) {
   contain otelcol::install

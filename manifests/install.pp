@@ -9,14 +9,20 @@ class otelcol::install {
   if $otelcol::manage_archive {
     case $facts['os']['family'] {
       'Debian': {
-        $package_source = "${otelcol::archive_location}.deb"
+        $archive_source = "${otelcol::archive_location}.deb"
       }
       'RedHat': {
-        $package_source = "${otelcol::archive_location}.rpm"
+        $archive_source = "${otelcol::archive_location}.rpm"
       }
       default: {
         fail('Only RedHat, CentOS, OracleLinux, Debian, Ubuntu repositories are supported at this time')
       }
+    }
+    $package_source = "${otelcol::localpath_archive}/${archive_source.split('/')[-1]}"
+    file { 'otelcol_package':
+      path   => $package_source,
+      source => $archive_source,
+      notify => Package['otelcol'],
     }
   }
   else {
