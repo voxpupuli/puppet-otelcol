@@ -53,8 +53,8 @@ class otelcol (
   String  $environment_file                      = "/etc/${package_name}/${package_name}.conf",
   Optional[String]  $run_options                 = undef,
   String  $config_file                           = "/etc/${package_name}/config.yaml",
-  String  $config_file_owner                     = $package_name,
-  String  $config_file_group                     = $package_name,
+  String  $config_file_owner                     = 'otel',
+  String  $config_file_group                     = 'otel',
   Stdlib::Filemode $config_file_mode             = '0640',
   Hash    $receivers                             = {
     'otlp' => {
