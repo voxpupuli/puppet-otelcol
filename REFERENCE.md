@@ -44,18 +44,18 @@ The following parameters are available in the `otelcol` class:
 * [`metrics_level`](#-otelcol--metrics_level)
 * [`metrics_address_host`](#-otelcol--metrics_address_host)
 * [`metrics_address_port`](#-otelcol--metrics_address_port)
-* [`service_ensure`](#-otelcol--service_ensure)
 * [`manage_service`](#-otelcol--manage_service)
 * [`manage_archive`](#-otelcol--manage_archive)
 * [`localpath_archive`](#-otelcol--localpath_archive)
 * [`archive_version`](#-otelcol--archive_version)
 * [`archive_location`](#-otelcol--archive_location)
+* [`service_ensure`](#-otelcol--service_ensure)
 
 ##### <a name="-otelcol--package_name"></a>`package_name`
 
 Data type: `String`
 
-
+Name of the package used
 
 Default value: `'otelcol'`
 
@@ -63,7 +63,7 @@ Default value: `'otelcol'`
 
 Data type: `Enum['present','absent','installed','latest']`
 
-
+Ensure for the package
 
 Default value: `'installed'`
 
@@ -71,7 +71,7 @@ Default value: `'installed'`
 
 Data type: `String`
 
-
+Name of the service used
 
 Default value: `$package_name`
 
@@ -79,7 +79,7 @@ Default value: `$package_name`
 
 Data type: `String`
 
-
+path of the environment file used for service
 
 Default value: `"/etc/${package_name}/${package_name}.conf"`
 
@@ -87,7 +87,7 @@ Default value: `"/etc/${package_name}/${package_name}.conf"`
 
 Data type: `Optional[String]`
 
-
+additional options for service
 
 Default value: `undef`
 
@@ -95,7 +95,7 @@ Default value: `undef`
 
 Data type: `String`
 
-
+path to config file
 
 Default value: `"/etc/${package_name}/config.yaml"`
 
@@ -103,7 +103,7 @@ Default value: `"/etc/${package_name}/config.yaml"`
 
 Data type: `String`
 
-
+owner of config_file
 
 Default value: `$package_name`
 
@@ -111,7 +111,7 @@ Default value: `$package_name`
 
 Data type: `String`
 
-
+group of config_file
 
 Default value: `$package_name`
 
@@ -119,7 +119,7 @@ Default value: `$package_name`
 
 Data type: `Stdlib::Filemode`
 
-
+mode of config_file
 
 Default value: `'0640'`
 
@@ -127,7 +127,7 @@ Default value: `'0640'`
 
 Data type: `Hash`
 
-
+Hash for receivers config
 
 Default value:
 
@@ -146,7 +146,7 @@ Default value:
 
 Data type: `Variant[Hash,String[1]]`
 
-
+Hash for processors config
 
 Default value: `{}`
 
@@ -154,7 +154,7 @@ Default value: `{}`
 
 Data type: `Variant[Hash,String[1]]`
 
-
+Hash for exporters config
 
 Default value: `{}`
 
@@ -162,7 +162,7 @@ Default value: `{}`
 
 Data type: `Variant[Hash,String[1]]`
 
-
+Hash for pipelines config
 
 Default value: `{}`
 
@@ -170,7 +170,7 @@ Default value: `{}`
 
 Data type: `Hash`
 
-
+Hash for extensions config
 
 Default value: `{}`
 
@@ -178,7 +178,7 @@ Default value: `{}`
 
 Data type: `Variant[Hash,String[1]]`
 
-
+Hash for log_options config
 
 Default value: `{}`
 
@@ -186,7 +186,7 @@ Default value: `{}`
 
 Data type: `Enum['none','basic','normal','detailed']`
 
-
+Level for metrics config
 
 Default value: `'basic'`
 
@@ -194,7 +194,7 @@ Default value: `'basic'`
 
 Data type: `Optional[Stdlib::Host]`
 
-
+Host metrics are listening to
 
 Default value: `undef`
 
@@ -202,9 +202,49 @@ Default value: `undef`
 
 Data type: `Stdlib::Port`
 
-
+Port metrics are listening to
 
 Default value: `8888`
+
+##### <a name="-otelcol--manage_service"></a>`manage_service`
+
+Data type: `Boolean`
+
+If service is managed by module
+
+Default value: `true`
+
+##### <a name="-otelcol--manage_archive"></a>`manage_archive`
+
+Data type: `Boolean`
+
+If archive should be managed by module of will be provided by packagemanager
+
+Default value: `false`
+
+##### <a name="-otelcol--localpath_archive"></a>`localpath_archive`
+
+Data type: `String[1]`
+
+Path where archive will be stored if managed
+
+Default value: `'/tmp'`
+
+##### <a name="-otelcol--archive_version"></a>`archive_version`
+
+Data type: `String[1]`
+
+Version of otelcol that will be used, param is not used if archive_location is set
+
+Default value: `'0.79.0'`
+
+##### <a name="-otelcol--archive_location"></a>`archive_location`
+
+Data type: `String[1]`
+
+Path to archive without filetype extension
+
+Default value: `"https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64"`
 
 ##### <a name="-otelcol--service_ensure"></a>`service_ensure`
 
@@ -213,46 +253,6 @@ Data type: `Stdlib::Ensure::Service`
 
 
 Default value: `'running'`
-
-##### <a name="-otelcol--manage_service"></a>`manage_service`
-
-Data type: `Boolean`
-
-
-
-Default value: `true`
-
-##### <a name="-otelcol--manage_archive"></a>`manage_archive`
-
-Data type: `Boolean`
-
-
-
-Default value: `false`
-
-##### <a name="-otelcol--localpath_archive"></a>`localpath_archive`
-
-Data type: `Boolean`
-
-
-
-Default value: `'/tmp'`
-
-##### <a name="-otelcol--archive_version"></a>`archive_version`
-
-Data type: `String[1]`
-
-
-
-Default value: `'0.77.0'`
-
-##### <a name="-otelcol--archive_location"></a>`archive_location`
-
-Data type: `String[1]`
-
-
-
-Default value: `"https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64"`
 
 ### <a name="otelcol--config"></a>`otelcol::config`
 
