@@ -1,8 +1,7 @@
 class { 'otelcol':
   manage_archive    => true,
   package_name      => 'otelcol-contrib',
-  config_file_owner => 'otelcol-contrib',
-  config_file_group => 'otelcol-contrib',
+  metrics_address_port => 8889,
   receivers         => {
     'otlp'       => {
       'protocols' => {
@@ -17,7 +16,7 @@ class { 'otelcol':
             'job_name'        => 'otel-collector',
             'scrape_interval' => '10s',
             'static_configs'  => [
-              { 'targets' => ['0.0.0.0:8888'] }
+              { 'targets' => ['localhost:8889'] }
             ],
           },
         ],

@@ -14,7 +14,7 @@ class { 'otelcol':
             'job_name'        => 'otel-collector',
             'scrape_interval' => '10s',
             'static_configs'  => [
-              { 'targets' => ['0.0.0.0:8888'] }
+              { 'targets' => ['localhost:8888'] }
             ],
           },
         ],
