@@ -6,45 +6,44 @@ describe 'Otelcol class' do
   context 'minimal parameters', 'init.pp' do
     # Using puppet_apply as a helper
     # it_behaves_like 'init', 'init.pp'
-    it 'works idempotently with no errors' do
-      pp = <<-EOS
-      class { 'otelcol':
-        manage_archive => true,
-        receivers      => {
-          'otlp'       => {
-            'protocols' => {
-              'grpc' => { 'endpoint' => 'localhost:4317' },
-              'http' => { 'endpoint' => 'localhost:4318' },
+
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+        class { 'otelcol':
+          manage_archive => true,
+          receivers      => {
+            'otlp'       => {
+              'protocols' => {
+                'grpc' => { 'endpoint' => 'localhost:4317' },
+                'http' => { 'endpoint' => 'localhost:4318' },
+              },
+            },
+            'prometheus' => {
+              'config' => {
+                'scrape_configs' => [
+                  {
+                    'job_name'        => 'otel-collector',
+                    'scrape_interval' => '10s',
+                    'static_configs'  => [
+                      { 'targets' => ['localhost:8888'] }
+                    ],
+                  },
+                ],
+              },
             },
           },
-          'prometheus' => {
-            'config' => {
-              'scrape_configs' => [
-                {
-                  'job_name'        => 'otel-collector',
-                  'scrape_interval' => '10s',
-                  'static_configs'  => [
-                    { 'targets' => ['localhost:8888'] }
-                  ],
-                },
-              ],
+          exporters      => { 'logging' => { 'verbosity' => 'detailed' } },
+          pipelines      => {
+            'metrics' => {
+              'receivers' => ['otlp', 'prometheus'],
+              'exporters' => ['logging'],
             },
           },
-        },
-        exporters      => { 'logging' => { 'verbosity' => 'detailed' } },
-        pipelines      => {
-          'metrics' => {
-            'receivers' => ['otlp', 'prometheus'],
-            'exporters' => ['logging'],
-          },
-        },
-        processors     => { 'batch' => {} },
-      }
-      EOS
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+          processors     => { 'batch' => {} },
+        }
+        PUPPET
+      end
     end
 
     describe service('otelcol') do
