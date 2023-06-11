@@ -105,7 +105,7 @@ Data type: `String`
 
 owner of config_file
 
-Default value: `$package_name`
+Default value: `'root'`
 
 ##### <a name="-otelcol--config_file_group"></a>`config_file_group`
 
@@ -113,7 +113,7 @@ Data type: `String`
 
 group of config_file
 
-Default value: `$package_name`
+Default value: `'root'`
 
 ##### <a name="-otelcol--config_file_mode"></a>`config_file_mode`
 
@@ -121,7 +121,7 @@ Data type: `Stdlib::Filemode`
 
 mode of config_file
 
-Default value: `'0640'`
+Default value: `'0644'`
 
 ##### <a name="-otelcol--receivers"></a>`receivers`
 
