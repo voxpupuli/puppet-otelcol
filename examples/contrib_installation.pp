@@ -1,8 +1,8 @@
 class { 'otelcol':
-  manage_archive    => true,
-  package_name      => 'otelcol-contrib',
+  manage_archive       => true,
+  package_name         => 'otelcol-contrib',
   metrics_address_port => 8889,
-  receivers         => {
+  receivers            => {
     'otlp'       => {
       'protocols' => {
         'grpc' => { 'endpoint' => 'localhost:4319' },
@@ -23,12 +23,12 @@ class { 'otelcol':
       },
     },
   },
-  exporters         => { 'logging' => { 'verbosity' => 'detailed' } },
-  pipelines         => {
+  exporters            => { 'logging' => { 'verbosity' => 'detailed' } },
+  pipelines            => {
     'metrics' => {
       'receivers' => ['otlp', 'prometheus'],
       'exporters' => ['logging'],
     },
   },
-  processors        => { 'batch' => {} },
+  processors           => { 'batch' => {} },
 }
