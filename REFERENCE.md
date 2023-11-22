@@ -16,6 +16,20 @@
 
 * `otelcol::service`: Manages the Otelcol service
 
+### Defined types
+
+#### Public Defined types
+
+* [`otelcol::exporter`](#otelcol--exporter): Define a OpenTelemetry Collector exporter
+* [`otelcol::extension`](#otelcol--extension): Add an extension to the OpenTelemetry Collector configuration
+* [`otelcol::pipeline`](#otelcol--pipeline): Add a pipeline to the OpenTelemetry Collector configuration
+* [`otelcol::processor`](#otelcol--processor): Add a processor to the OpenTelemetry Collector configuration
+* [`otelcol::receiver`](#otelcol--receiver): Add a receiver to the OpenTelemetry Collector configuration
+
+#### Private Defined types
+
+* `otelcol::component`: Define a component for the OpenTelemetry Collector Configuration
+
 ## Classes
 
 ### <a name="otelcol"></a>`otelcol`
@@ -125,22 +139,11 @@ Default value: `'0644'`
 
 ##### <a name="-otelcol--receivers"></a>`receivers`
 
-Data type: `Hash`
+Data type: `Optional[Hash]`
 
 Hash for receivers config
 
-Default value:
-
-```puppet
-{
-    'otlp' => {
-      'protocols' => {
-        'http' => {},
-        'grpc' => {},
-      },
-    },
-  }
-```
+Default value: `undef`
 
 ##### <a name="-otelcol--processors"></a>`processors`
 
@@ -236,7 +239,7 @@ Data type: `String[1]`
 
 Version of otelcol that will be used, param is not used if archive_location is set
 
-Default value: `'0.79.0'`
+Default value: `'0.89.0'`
 
 ##### <a name="-otelcol--archive_location"></a>`archive_location`
 
@@ -266,4 +269,235 @@ Templated generation of otelcol.conf
 
 Conditionally handle repos or package paths and install the necessary
 otelcol package.
+
+## Defined types
+
+### <a name="otelcol--exporter"></a>`otelcol::exporter`
+
+Create a OpenTelemetry Collector exporter in the configuration file.
+
+#### Examples
+
+##### 
+
+```puppet
+otelcol::exporter { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::exporter` defined type:
+
+* [`name`](#-otelcol--exporter--name)
+* [`config`](#-otelcol--exporter--config)
+* [`order`](#-otelcol--exporter--order)
+* [`pipelines`](#-otelcol--exporter--pipelines)
+
+##### <a name="-otelcol--exporter--name"></a>`name`
+
+The name of the exporter.
+
+##### <a name="-otelcol--exporter--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the exporter.
+
+Default value: `{}`
+
+##### <a name="-otelcol--exporter--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the exporter.
+
+Default value: `0`
+
+##### <a name="-otelcol--exporter--pipelines"></a>`pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines to attach the exporter to.
+
+Default value: `[]`
+
+### <a name="otelcol--extension"></a>`otelcol::extension`
+
+Add an extension to the OpenTelemetry Collector configuration
+
+#### Examples
+
+##### 
+
+```puppet
+otelcol::extension { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::extension` defined type:
+
+* [`name`](#-otelcol--extension--name)
+* [`config`](#-otelcol--extension--config)
+* [`order`](#-otelcol--extension--order)
+
+##### <a name="-otelcol--extension--name"></a>`name`
+
+The name of the extension
+
+##### <a name="-otelcol--extension--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration for the extension
+
+Default value: `{}`
+
+##### <a name="-otelcol--extension--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order in which the extension should be loaded
+
+Default value: `0`
+
+### <a name="otelcol--pipeline"></a>`otelcol::pipeline`
+
+Used for explicitly configuring a pipeline in the OpenTelemetry Collector.
+This is useful for configuring a pipeline that is not automatically
+configured by its Components.
+
+#### Examples
+
+##### 
+
+```puppet
+otelcol::pipeline { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::pipeline` defined type:
+
+* [`name`](#-otelcol--pipeline--name)
+* [`config`](#-otelcol--pipeline--config)
+* [`order`](#-otelcol--pipeline--order)
+
+##### <a name="-otelcol--pipeline--name"></a>`name`
+
+The name of the pipeline to configure.
+
+##### <a name="-otelcol--pipeline--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration for the pipeline.
+
+Default value: `{}`
+
+##### <a name="-otelcol--pipeline--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order in which the pipeline should be configured.
+
+Default value: `0`
+
+### <a name="otelcol--processor"></a>`otelcol::processor`
+
+Add a processor to the OpenTelemetry Collector configuration
+
+#### Examples
+
+##### 
+
+```puppet
+otelcol::processor { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::processor` defined type:
+
+* [`name`](#-otelcol--processor--name)
+* [`config`](#-otelcol--processor--config)
+* [`order`](#-otelcol--processor--order)
+* [`pipelines`](#-otelcol--processor--pipelines)
+
+##### <a name="-otelcol--processor--name"></a>`name`
+
+The name of the processor
+
+##### <a name="-otelcol--processor--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the processor
+
+Default value: `{}`
+
+##### <a name="-otelcol--processor--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the processor
+
+Default value: `0`
+
+##### <a name="-otelcol--processor--pipelines"></a>`pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines to attach the processor to
+
+Default value: `[]`
+
+### <a name="otelcol--receiver"></a>`otelcol::receiver`
+
+Add a receiver to the OpenTelemetry Collector configuration
+
+#### Examples
+
+##### 
+
+```puppet
+otelcol::receiver { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::receiver` defined type:
+
+* [`name`](#-otelcol--receiver--name)
+* [`config`](#-otelcol--receiver--config)
+* [`order`](#-otelcol--receiver--order)
+* [`pipelines`](#-otelcol--receiver--pipelines)
+
+##### <a name="-otelcol--receiver--name"></a>`name`
+
+The name of the receiver
+
+##### <a name="-otelcol--receiver--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the receiver
+
+Default value: `{}`
+
+##### <a name="-otelcol--receiver--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the receiver
+
+Default value: `0`
+
+##### <a name="-otelcol--receiver--pipelines"></a>`pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines the receiver is part of
+
+Default value: `[]`
 

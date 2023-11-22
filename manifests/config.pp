@@ -4,15 +4,8 @@
 #
 class otelcol::config inherits otelcol {
   assert_private()
-
-  $settings = {
-    'receivers' => $otelcol::receivers,
-    'processors' => $otelcol::processors,
-    'exporters' => $otelcol::exporters,
-    'extensions' => $otelcol::extensions,
+  $component = {
     'service' => {
-      'extensions' => $otelcol::extensions.keys(),
-      'pipelines' => $otelcol::pipelines,
       'telemetry' => {
         'logs' => $otelcol::log_options,
         'metrics' => {
@@ -23,13 +16,31 @@ class otelcol::config inherits otelcol {
     },
   }
 
-  file { 'otelcol-config' :
-    ensure  => 'file',
-    path    => $otelcol::config_file,
-    content => template('otelcol/config.yml.erb'),
-    owner   => $otelcol::config_file_owner,
-    group   => $otelcol::config_file_group,
-    mode    => $otelcol::config_file_mode,
+  concat { 'otelcol-config' :
+    ensure => present,
+    path   => $otelcol::config_file,
+    format => 'yaml',
+    # content => template('otelcol/config.yml.erb'),
+    owner  => $otelcol::config_file_owner,
+    group  => $otelcol::config_file_group,
+    mode   => $otelcol::config_file_mode,
+  }
+  concat::fragment { 'otelcol-config-header' :
+    target  => 'otelcol-config',
+    order   => 0,
+    content => template('otelcol/config-header.yml.erb'),
+  }
+
+  concat::fragment { 'otelcol-config-baseconfig' :
+    target  => 'otelcol-config',
+    order   => 10000,
+    content => template('otelcol/component.yml.erb'),
+  }
+
+  concat::fragment { 'otelcol-config-footer' :
+    target  => 'otelcol-config',
+    order   => 10001,
+    content => template('otelcol/config-footer.yml.erb'),
   }
   file { 'otelcol-environment' :
     ensure  => 'file',
@@ -38,5 +49,60 @@ class otelcol::config inherits otelcol {
     owner   => $otelcol::config_file_owner,
     group   => $otelcol::config_file_group,
     mode    => $otelcol::config_file_mode,
+  }
+
+  if($otelcol::receivers) {
+    $otelcol::receivers.each|String $rname, Hash $rvalue| {
+      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+        ensure_resource('Otelcol::Receiver', $rname, $rvalue)
+      }
+      else {
+        ensure_resource('Otelcol::Receiver', $rname, { 'config' => $rvalue })
+      }
+    }
+  }
+
+  if($otelcol::processors) {
+    $otelcol::processors.each|String $rname, Hash $rvalue| {
+      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+        ensure_resource('Otelcol::Processor', $rname, $rvalue)
+      }
+      else {
+        ensure_resource('Otelcol::Processor', $rname, { 'config' => $rvalue })
+      }
+    }
+  }
+
+  if($otelcol::exporters) {
+    $otelcol::exporters.each|String $rname, Hash $rvalue| {
+      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+        ensure_resource('Otelcol::Exporter', $rname, $rvalue)
+      }
+      else {
+        ensure_resource('Otelcol::Exporter', $rname, { 'config' => $rvalue })
+      }
+    }
+  }
+
+  if($otelcol::pipelines) {
+    $otelcol::pipelines.each|String $rname, Hash $rvalue| {
+      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+        ensure_resource('Otelcol::Pipeline', $rname, $rvalue)
+      }
+      else {
+        ensure_resource('Otelcol::Pipeline', $rname, { 'config' => $rvalue })
+      }
+    }
+  }
+
+  if($otelcol::extensions) {
+    $otelcol::extensions.each|String $rname, Hash $rvalue| {
+      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+        ensure_resource('Otelcol::Extension', $rname, $rvalue)
+      }
+      else {
+        ensure_resource('Otelcol::Extension', $rname, { 'config' => $rvalue })
+      }
+    }
   }
 }
