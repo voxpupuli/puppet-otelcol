@@ -8,16 +8,16 @@ describe 'otelcol' do
       let(:facts) do
         facts
       end
-      
+
       context 'default include' do
         it { is_expected.to compile.with_all_deps }
 
         it {
           is_expected.to contain_class('otelcol::config')
           is_expected.to contain_concat('otelcol-config').with({
-            'path' => '/etc/otelcol/config.yaml',
-            'format' => 'yaml',
-          })
+                                                                 'path' => '/etc/otelcol/config.yaml',
+                                                                 'format' => 'yaml',
+                                                               })
           is_expected.to contain_concat__fragment('otelcol-config-header')
           is_expected.to contain_concat__fragment('otelcol-config-baseconfig')
           is_expected.to contain_concat__fragment('otelcol-config-footer')
@@ -58,7 +58,7 @@ describe 'otelcol' do
         }
 
         it { # Validate vaild YAML for config
-          is_expected.to contain_concat('otelcol-config')# .with_content(configcontent.to_yaml)
+          is_expected.to contain_concat('otelcol-config') # .with_content(configcontent.to_yaml)
           # yaml_object = YAML.load(catalogue.resource('file', 'otelcol-config').send(:parameters)[:content])
           # expect(yaml_object.length).to be > 0
         }
@@ -176,12 +176,14 @@ describe 'otelcol' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_otelcol__receiver('test').with({
-            'config' => {},
-            'pipelines' => [],
-            'order' => 0,
-            'name' => 'test',
-          })
+
+        it {
+          is_expected.to contain_otelcol__receiver('test').with({
+                                                                  'config' => {},
+                                                                  'pipelines' => [],
+                                                                  'order' => 0,
+                                                                  'name' => 'test',
+                                                                })
           is_expected.to contain_otelcol__component('test-receivers')
           is_expected.to contain_concat__fragment('otelcol-config-receivers-test')
         }
@@ -197,12 +199,14 @@ describe 'otelcol' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_otelcol__processor('test').with({
-            'config' => {},
-            'pipelines' => [],
-            'order' => 0,
-            'name' => 'test',
-          })
+
+        it {
+          is_expected.to contain_otelcol__processor('test').with({
+                                                                   'config' => {},
+                                                                   'pipelines' => [],
+                                                                   'order' => 0,
+                                                                   'name' => 'test',
+                                                                 })
           is_expected.to contain_otelcol__component('test-processors')
           is_expected.to contain_concat__fragment('otelcol-config-processors-test')
         }
@@ -218,12 +222,14 @@ describe 'otelcol' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_otelcol__exporter('test').with({
-            'config' => {},
-            'pipelines' => [],
-            'order' => 0,
-            'name' => 'test',
-          })
+
+        it {
+          is_expected.to contain_otelcol__exporter('test').with({
+                                                                  'config' => {},
+                                                                  'pipelines' => [],
+                                                                  'order' => 0,
+                                                                  'name' => 'test',
+                                                                })
           is_expected.to contain_otelcol__component('test-exporter')
           is_expected.to contain_concat__fragment('otelcol-config-exporters-test')
         }
@@ -239,11 +245,13 @@ describe 'otelcol' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_otelcol__pipeline('test').with({
-            'config' => {},
-            'order' => 0,
-            'name' => 'test',
-          })
+
+        it {
+          is_expected.to contain_otelcol__pipeline('test').with({
+                                                                  'config' => {},
+                                                                  'order' => 0,
+                                                                  'name' => 'test',
+                                                                })
           is_expected.to contain_concat__fragment('otelcol-config-pipeline-test')
         }
       end
@@ -258,11 +266,13 @@ describe 'otelcol' do
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_otelcol__extension('test').with({
-            'config' => {},
-            'order' => 0,
-            'name' => 'test',
-          })
+
+        it {
+          is_expected.to contain_otelcol__extension('test').with({
+                                                                   'config' => {},
+                                                                   'order' => 0,
+                                                                   'name' => 'test',
+                                                                 })
           is_expected.to contain_concat__fragment('otelcol-config-extension-test')
         }
       end

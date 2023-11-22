@@ -17,40 +17,45 @@ describe 'otelcol::processor' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
-      it { is_expected.to contain_otelcol__component('batch-processors').with({
-        'order' => 2000,
-        'config' => {
-          'key' => 'value',
-        },
-        'pipelines' => [],
-        'type' => 'processors',
-        'component_name' => 'batch',
-      }) }
+
       it {
-        is_expected.to contain_concat__fragment('otelcol-config-processors-batch').with({
-          'order' => 2000,
-          'target' => 'otelcol-config',
-        })
+        is_expected.to contain_otelcol__component('batch-processors').with({
+                                                                             'order' => 2000,
+                                                                             'config' => {
+                                                                               'key' => 'value',
+                                                                             },
+                                                                             'pipelines' => [],
+                                                                             'type' => 'processors',
+                                                                             'component_name' => 'batch',
+                                                                           })
       }
 
+      it {
+        is_expected.to contain_concat__fragment('otelcol-config-processors-batch').with({
+                                                                                          'order' => 2000,
+                                                                                          'target' => 'otelcol-config',
+                                                                                        })
+      }
 
       context 'with order' do
         let :params do
-          super().merge({'order' => 1})
+          super().merge({ 'order' => 1 })
         end
 
         it { is_expected.to compile }
-        it { is_expected.to contain_otelcol__component('batch-processors').with({
-          'order' => 2001,
-          'config' => {
-            'key' => 'value',
-          },
-          'pipelines' => [],
-          'type' => 'processors',
-          'component_name' => 'batch',
-        }) }
-      end
 
+        it {
+          is_expected.to contain_otelcol__component('batch-processors').with({
+                                                                               'order' => 2001,
+                                                                               'config' => {
+                                                                                 'key' => 'value',
+                                                                               },
+                                                                               'pipelines' => [],
+                                                                               'type' => 'processors',
+                                                                               'component_name' => 'batch',
+                                                                             })
+        }
+      end
     end
   end
 end
