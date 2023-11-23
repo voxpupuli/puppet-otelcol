@@ -17,7 +17,7 @@ define otelcol::processor (
   Array[String[1]] $pipelines = [],
 ) {
   $real_order = 2000+$order
-  Otelcol::Component { "${name}-processors":
+  otelcol::component { "${name}-processors":
     order => $real_order,
     config => $config,
     pipelines => $pipelines,

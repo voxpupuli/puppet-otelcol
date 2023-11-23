@@ -18,7 +18,7 @@ define otelcol::exporter (
   Array[String[1]] $pipelines = [],
 ) {
   $real_order = 3000+$order
-  Otelcol::Component { "${name}-exporter":
+  otelcol::component { "${name}-exporter":
     order => $real_order,
     config => $config,
     pipelines => $pipelines,
