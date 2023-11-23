@@ -27,7 +27,7 @@ class otelcol::config inherits otelcol {
   concat::fragment { 'otelcol-config-header' :
     target  => 'otelcol-config',
     order   => 0,
-    content => template('otelcol/config-header.yml.erb'),
+    content => '# File Managed by Puppet',
   }
 
   concat::fragment { 'otelcol-config-baseconfig' :
