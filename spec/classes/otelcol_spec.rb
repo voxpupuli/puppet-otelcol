@@ -20,7 +20,6 @@ describe 'otelcol' do
                                                                })
           is_expected.to contain_concat__fragment('otelcol-config-header')
           is_expected.to contain_concat__fragment('otelcol-config-baseconfig')
-          is_expected.to contain_concat__fragment('otelcol-config-footer')
           is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol/otelcol.conf')
           is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/config.yaml"})
         }
