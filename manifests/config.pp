@@ -51,8 +51,7 @@ class otelcol::config inherits otelcol {
     mode    => $otelcol::config_file_mode,
   }
 
-  if($otelcol::receivers) {
-    $otelcol::receivers.each|String $rname, Hash $rvalue| {
+  $otelcol::receivers.each|String $rname, Hash $rvalue| {
       if $rvalue['config'] =~ Hash {
         ensure_resource('Otelcol::Receiver', $rname, $rvalue)
       } else {
