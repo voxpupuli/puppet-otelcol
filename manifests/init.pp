@@ -56,7 +56,7 @@ class otelcol (
   String  $config_file_owner                     = 'root',
   String  $config_file_group                     = 'root',
   Stdlib::Filemode $config_file_mode             = '0644',
-  Optional[Hash] $receivers                      = undef,
+  Hash[String, Hash] $receivers = {},
   Variant[Hash,String[1]]    $processors                            = {},
   Variant[Hash,String[1]]    $exporters                             = {},
   Variant[Hash,String[1]]    $pipelines                             = {},
