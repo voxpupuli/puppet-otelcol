@@ -17,10 +17,10 @@ define otelcol::receiver (
 ) {
   $real_order = 1000+$order
   otelcol::component { "${name}-receivers":
-    order => $real_order,
-    config => $config,
-    pipelines => $pipelines,
+    order          => $real_order,
+    config         => $config,
+    pipelines      => $pipelines,
     component_name => $name,
-    type => 'receivers',
+    type           => 'receivers',
   }
 }

@@ -25,6 +25,6 @@ define otelcol::extension (
   concat::fragment { "otelcol-config-extension-${name}" :
     target  => 'otelcol-config',
     order   => $real_order,
-    content => template('otelcol/component.yml.erb'),
+    content => stdlib::to_yaml($component),
   }
 }

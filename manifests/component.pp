@@ -35,7 +35,7 @@ define otelcol::component (
   concat::fragment { "otelcol-config-${type}-${component_name}" :
     target  => 'otelcol-config',
     order   => $order,
-    content => template('otelcol/component.yml.erb'),
+    content => stdlib::to_yaml($component),
   }
 
   $pipelines.each |String $pipeline| {
@@ -51,7 +51,7 @@ define otelcol::component (
     concat::fragment { "otelcol-config-${type}-${component_name}-${pipeline}" :
       target  => 'otelcol-config',
       order   => $order,
-      content => template('otelcol/component.yml.erb'),
+      content => stdlib::to_yaml($component),
     }
   }
 }

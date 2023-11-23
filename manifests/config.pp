@@ -20,7 +20,6 @@ class otelcol::config inherits otelcol {
     ensure => present,
     path   => $otelcol::config_file,
     format => 'yaml',
-    # content => template('otelcol/config.yml.erb'),
     owner  => $otelcol::config_file_owner,
     group  => $otelcol::config_file_group,
     mode   => $otelcol::config_file_mode,
@@ -34,7 +33,7 @@ class otelcol::config inherits otelcol {
   concat::fragment { 'otelcol-config-baseconfig' :
     target  => 'otelcol-config',
     order   => 10000,
-    content => template('otelcol/component.yml.erb'),
+    content => stdlib::to_yaml($component),
   }
 
   concat::fragment { 'otelcol-config-footer' :
