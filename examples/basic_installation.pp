@@ -25,12 +25,12 @@ otelcol::receiver { 'prometheus' :
   pipelines => ['metrics'],
 }
 
-Otelcol::Exporter { 'logging':
+otelcol::exporter { 'logging':
   config    => { 'verbosity' => 'detailed' },
   pipelines => ['metrics'],
 }
 
-Otelcol::Processor { 'batch':
+otelcol::processor { 'batch':
   config    => {},
   pipelines => ['metrics'],
 }

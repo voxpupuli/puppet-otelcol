@@ -8,7 +8,7 @@ otelcol::receiver { 'otlp' :
   pipelines => ['metrics'],
 }
 
-Otelcol::Receiver { 'prometheus' :
+otelcol::receiver { 'prometheus' :
   config    => {
     'config' => {
       'scrape_configs' => [
@@ -25,12 +25,12 @@ Otelcol::Receiver { 'prometheus' :
   pipelines => ['metrics'],
 }
 
-Otelcol::Exporter { 'logging':
+otelcol::exporter { 'logging':
   config    => { 'verbosity' => 'detailed' },
   pipelines => ['metrics'],
 }
 
-Otelcol::Processor { 'batch':
+otelcol::processor { 'batch':
   config    => {},
   pipelines => ['metrics'],
 }
