@@ -36,11 +36,6 @@ class otelcol::config inherits otelcol {
     content => stdlib::to_yaml($component),
   }
 
-  concat::fragment { 'otelcol-config-footer' :
-    target  => 'otelcol-config',
-    order   => 10001,
-    content => template('otelcol/config-footer.yml.erb'),
-  }
   file { 'otelcol-environment' :
     ensure  => 'file',
     path    => $otelcol::environment_file,
