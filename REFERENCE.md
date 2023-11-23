@@ -147,7 +147,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--processors"></a>`processors`
 
-Data type: `Variant[Hash,String[1]]`
+Data type: `Hash[String, Hash]`
 
 Hash for processors config
 
@@ -155,7 +155,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--exporters"></a>`exporters`
 
-Data type: `Variant[Hash,String[1]]`
+Data type: `Hash[String, Hash]`
 
 Hash for exporters config
 
@@ -163,7 +163,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--pipelines"></a>`pipelines`
 
-Data type: `Variant[Hash,String[1]]`
+Data type: `Hash[String, Hash]`
 
 Hash for pipelines config
 
@@ -171,7 +171,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--extensions"></a>`extensions`
 
-Data type: `Hash`
+Data type: `Hash[String, Hash]`
 
 Hash for extensions config
 
@@ -458,7 +458,7 @@ Add a receiver to the OpenTelemetry Collector configuration
 
 #### Examples
 
-##### 
+##### basic receiver
 
 ```puppet
 otelcol::receiver { 'namevar': }
