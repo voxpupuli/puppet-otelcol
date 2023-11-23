@@ -139,11 +139,11 @@ Default value: `'0644'`
 
 ##### <a name="-otelcol--receivers"></a>`receivers`
 
-Data type: `Optional[Hash]`
+Data type: `Hash[String, Hash]`
 
 Hash for receivers config
 
-Default value: `undef`
+Default value: `{}`
 
 ##### <a name="-otelcol--processors"></a>`processors`
 
