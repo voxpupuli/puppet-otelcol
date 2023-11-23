@@ -55,8 +55,7 @@ class otelcol::config inherits otelcol {
     $otelcol::receivers.each|String $rname, Hash $rvalue| {
       if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
         ensure_resource('Otelcol::Receiver', $rname, $rvalue)
-      }
-      else {
+      } else {
         ensure_resource('Otelcol::Receiver', $rname, { 'config' => $rvalue })
       }
     }
