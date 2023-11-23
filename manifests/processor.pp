@@ -18,10 +18,10 @@ define otelcol::processor (
 ) {
   $real_order = 2000+$order
   otelcol::component { "${name}-processors":
-    order => $real_order,
-    config => $config,
-    pipelines => $pipelines,
+    order          => $real_order,
+    config         => $config,
+    pipelines      => $pipelines,
     component_name => $name,
-    type => 'processors',
+    type           => 'processors',
   }
 }

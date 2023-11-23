@@ -19,10 +19,10 @@ define otelcol::exporter (
 ) {
   $real_order = 3000+$order
   otelcol::component { "${name}-exporter":
-    order => $real_order,
-    config => $config,
-    pipelines => $pipelines,
+    order          => $real_order,
+    config         => $config,
+    pipelines      => $pipelines,
     component_name => $name,
-    type => 'exporters',
+    type           => 'exporters',
   }
 }
