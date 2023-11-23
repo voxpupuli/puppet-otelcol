@@ -8,7 +8,7 @@ otelcol::receiver { 'otlp' :
   pipelines => ['metrics'],
 }
 
-Otelcol::Receiver { 'prometheus' :
+otelcol::receiver { 'prometheus' :
   config    => {
     'config' => {
       'scrape_configs' => [
