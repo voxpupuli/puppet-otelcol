@@ -53,47 +53,39 @@ class otelcol::config inherits otelcol {
     }
   }
 
-  if($otelcol::processors) {
-    $otelcol::processors.each|String $rname, Hash $rvalue| {
-      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
-        ensure_resource('otelcol::processor', $rname, $rvalue)
-      }
-      else {
-        ensure_resource('otelcol::processor', $rname, { 'config' => $rvalue })
-      }
+  $otelcol::processors.each|String $rname, Hash $rvalue| {
+    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+      ensure_resource('otelcol::processor', $rname, $rvalue)
+    }
+    else {
+      ensure_resource('otelcol::processor', $rname, { 'config' => $rvalue })
     }
   }
 
-  if($otelcol::exporters) {
-    $otelcol::exporters.each|String $rname, Hash $rvalue| {
-      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
-        ensure_resource('otelcol::exporter', $rname, $rvalue)
-      }
-      else {
-        ensure_resource('otelcol::exporter', $rname, { 'config' => $rvalue })
-      }
+  $otelcol::exporters.each|String $rname, Hash $rvalue| {
+    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+      ensure_resource('otelcol::exporter', $rname, $rvalue)
+    }
+    else {
+      ensure_resource('otelcol::exporter', $rname, { 'config' => $rvalue })
     }
   }
 
-  if($otelcol::pipelines) {
-    $otelcol::pipelines.each|String $rname, Hash $rvalue| {
-      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
-        ensure_resource('otelcol::pipeline', $rname, $rvalue)
-      }
-      else {
-        ensure_resource('otelcol::pipeline', $rname, { 'config' => $rvalue })
-      }
+  $otelcol::pipelines.each|String $rname, Hash $rvalue| {
+    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+      ensure_resource('otelcol::pipeline', $rname, $rvalue)
+    }
+    else {
+      ensure_resource('otelcol::pipeline', $rname, { 'config' => $rvalue })
     }
   }
 
-  if($otelcol::extensions) {
-    $otelcol::extensions.each|String $rname, Hash $rvalue| {
-      if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
-        ensure_resource('otelcol::extension', $rname, $rvalue)
-      }
-      else {
-        ensure_resource('otelcol::extension', $rname, { 'config' => $rvalue })
-      }
+  $otelcol::extensions.each|String $rname, Hash $rvalue| {
+    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+      ensure_resource('otelcol::extension', $rname, $rvalue)
+    }
+    else {
+      ensure_resource('otelcol::extension', $rname, { 'config' => $rvalue })
     }
   }
 }
