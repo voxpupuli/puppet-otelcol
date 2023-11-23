@@ -16,7 +16,7 @@ define otelcol::receiver (
   Array[String[1]] $pipelines = [],
 ) {
   $real_order = 1000+$order
-  Otelcol::Component { "${name}-receivers":
+  otelcol::component { "${name}-receivers":
     order => $real_order,
     config => $config,
     pipelines => $pipelines,
