@@ -8,7 +8,7 @@
 #   The order of the receiver
 # @param pipelines
 #   The pipelines the receiver is part of
-# @example
+# @example basic receiver
 #   otelcol::receiver { 'namevar': }
 define otelcol::receiver (
   Hash $config = {},
