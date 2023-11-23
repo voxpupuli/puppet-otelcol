@@ -1,4 +1,4 @@
-Otelcol::Receiver { 'otlp' :
+otelcol::receiver { 'otlp' :
   config    => {
     'protocols' => {
       'grpc' => { 'endpoint' => 'localhost:4317' },
