@@ -1,6 +1,6 @@
 {
   "name": "puppet-otelcol",
-  "version": "1.0.0-rc0",
+  "version": "1.0.0",
   "author": "Vox Pupuli",
   "summary": "Installs and Manages Open Telemetry Collector",
   "license": "Apache-2.0",
