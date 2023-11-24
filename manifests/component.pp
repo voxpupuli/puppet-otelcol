@@ -20,7 +20,7 @@
 # }
 # @api private
 define otelcol::component (
-  String $component_name,
+  Otelcol::Component::Name $component_name,
   String $type,
   Hash $config = {},
   Integer[0,10999] $order = 0,
