@@ -62,7 +62,7 @@ class otelcol::config inherits otelcol {
   }
 
   $otelcol::exporters.each|String $rname, Hash $rvalue| {
-    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+    if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::exporter', $rname, $rvalue)
     }
     else {
@@ -71,7 +71,7 @@ class otelcol::config inherits otelcol {
   }
 
   $otelcol::pipelines.each|String $rname, Hash $rvalue| {
-    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+    if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::pipeline', $rname, $rvalue)
     }
     else {
@@ -80,7 +80,7 @@ class otelcol::config inherits otelcol {
   }
 
   $otelcol::extensions.each|String $rname, Hash $rvalue| {
-    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+    if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::extension', $rname, $rvalue)
     }
     else {
