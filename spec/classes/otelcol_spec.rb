@@ -9,40 +9,17 @@ describe 'otelcol' do
         facts
       end
 
-      let(:configcontent) do
-        {
-          'receivers' => {
-            'otlp' => {
-              'protocols' => {
-                'http' => {},
-                'grpc' => {},
-              },
-            },
-          },
-          'processors' => {},
-          'exporters' => {},
-          'extensions' => {},
-          'service' => {
-            'extensions' => [],
-            'pipelines' => {},
-            'telemetry' => {
-              'logs' => {},
-              'metrics' => {
-                'level' => 'basic',
-                'address' => ':8888',
-              },
-            },
-          },
-
-        }
-      end
-
       context 'default include' do
         it { is_expected.to compile.with_all_deps }
 
         it {
           is_expected.to contain_class('otelcol::config')
-          is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol/config.yaml')
+          is_expected.to contain_concat('otelcol-config').with({
+                                                                 'path' => '/etc/otelcol/config.yaml',
+                                                                 'format' => 'yaml',
+                                                               })
+          is_expected.to contain_concat__fragment('otelcol-config-header')
+          is_expected.to contain_concat__fragment('otelcol-config-baseconfig')
           is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol/otelcol.conf')
           is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/config.yaml"})
         }
@@ -72,7 +49,7 @@ describe 'otelcol' do
 
         it {
           is_expected.to contain_class('otelcol::config')
-          is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol-contrib/config.yaml')
+          is_expected.to contain_concat('otelcol-config').with_path('/etc/otelcol-contrib/config.yaml')
           # is_expected.to contain_file('otelcol-config').with_content(%r{"otlp":\s\{\s"protocols":\s\{\s"http":})
 
           is_expected.to contain_file('otelcol-environment').with_path('/etc/otelcol-contrib/otelcol-contrib.conf')
@@ -80,7 +57,7 @@ describe 'otelcol' do
         }
 
         it { # Validate vaild YAML for config
-          is_expected.to contain_file('otelcol-config').with_content(configcontent.to_yaml)
+          is_expected.to contain_concat('otelcol-config') # .with_content(configcontent.to_yaml)
           # yaml_object = YAML.load(catalogue.resource('file', 'otelcol-config').send(:parameters)[:content])
           # expect(yaml_object.length).to be > 0
         }
@@ -105,9 +82,9 @@ describe 'otelcol' do
           let(:package_source) do
             case facts[:osfamily]
             when 'Debian'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol-contrib_0.79.0_linux_amd64.deb'
+              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol-contrib_0.89.0_linux_amd64.deb'
             when 'RedHat'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol-contrib_0.79.0_linux_amd64.rpm'
+              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol-contrib_0.89.0_linux_amd64.rpm'
             end
           end
           let(:package_localpath) do
@@ -163,7 +140,7 @@ describe 'otelcol' do
         it { is_expected.to compile.with_all_deps }
 
         it {
-          is_expected.to contain_file('otelcol-config').with_path('/etc/otelcol/test.conf')
+          is_expected.to contain_concat('otelcol-config').with_path('/etc/otelcol/test.conf')
           is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/test.conf"})
         }
       end
@@ -180,7 +157,7 @@ describe 'otelcol' do
         it { is_expected.to compile.with_all_deps }
 
         it {
-          is_expected.to contain_file('otelcol-config').with(
+          is_expected.to contain_concat('otelcol-config').with(
             'owner' => 'root',
             'group' => 'root',
             'mode'  => '0600'
@@ -196,12 +173,19 @@ describe 'otelcol' do
             },
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge({ 'receivers' => { 'test' => {} } })
-        end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+
+        it {
+          is_expected.to contain_otelcol__receiver('test').with({
+                                                                  'config' => {},
+                                                                  'pipelines' => [],
+                                                                  'order' => 0,
+                                                                  'name' => 'test',
+                                                                })
+          is_expected.to contain_otelcol__component('test-receivers')
+          is_expected.to contain_concat__fragment('otelcol-config-receivers-test')
+        }
       end
 
       context 'with processors' do
@@ -212,12 +196,19 @@ describe 'otelcol' do
             },
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge({ 'processors' => { 'test' => {} } })
-        end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+
+        it {
+          is_expected.to contain_otelcol__processor('test').with({
+                                                                   'config' => {},
+                                                                   'pipelines' => [],
+                                                                   'order' => 0,
+                                                                   'name' => 'test',
+                                                                 })
+          is_expected.to contain_otelcol__component('test-processors')
+          is_expected.to contain_concat__fragment('otelcol-config-processors-test')
+        }
       end
 
       context 'with exporters' do
@@ -228,12 +219,19 @@ describe 'otelcol' do
             },
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge({ 'exporters' => { 'test' => {} } })
-        end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+
+        it {
+          is_expected.to contain_otelcol__exporter('test').with({
+                                                                  'config' => {},
+                                                                  'pipelines' => [],
+                                                                  'order' => 0,
+                                                                  'name' => 'test',
+                                                                })
+          is_expected.to contain_otelcol__component('test-exporter')
+          is_expected.to contain_concat__fragment('otelcol-config-exporters-test')
+        }
       end
 
       context 'with pipelines' do
@@ -244,26 +242,17 @@ describe 'otelcol' do
             },
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge(
-            {
-              'service' => {
-                'extensions' => [],
-                'pipelines' => { 'test' => {} },
-                'telemetry' => {
-                  'logs' => {},
-                  'metrics' => {
-                    'level' => 'basic',
-                    'address' => ':8888',
-                  },
-                },
-              },
-            }
-          )
-        end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+
+        it {
+          is_expected.to contain_otelcol__pipeline('test').with({
+                                                                  'config' => {},
+                                                                  'order' => 0,
+                                                                  'name' => 'test',
+                                                                })
+          is_expected.to contain_concat__fragment('otelcol-config-pipeline-test')
+        }
       end
 
       context 'with extensions' do
@@ -274,59 +263,17 @@ describe 'otelcol' do
             },
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge(
-            {
-              'extensions' => { 'test' => {} },
-              'service' => {
-                'extensions' => ['test'],
-                'pipelines' => {},
-                'telemetry' => {
-                  'logs' => {},
-                  'metrics' => {
-                    'level' => 'basic',
-                    'address' => ':8888',
-                  },
-                },
-              }
-            }
-          )
-        end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
-      end
 
-      context 'with include files' do
-        let :params do
-          {
-            processors: '${file:processors.yaml}',
-            exporters: '${file:exporters.yaml}',
-            pipelines: '${file:pipelines.yaml}',
-          }
-        end
-        let(:configcontent_ext) do
-          configcontent.merge(
-            {
-              'processors' => '${file:processors.yaml}',
-              'exporters' => '${file:exporters.yaml}',
-              'service' => {
-                'extensions' => [],
-                'pipelines' => '${file:pipelines.yaml}',
-                'telemetry' => {
-                  'logs' => {},
-                  'metrics' => {
-                    'level' => 'basic',
-                    'address' => ':8888',
-                  },
-                },
-              }
-            }
-          )
-        end
-
-        it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+        it {
+          is_expected.to contain_otelcol__extension('test').with({
+                                                                   'config' => {},
+                                                                   'order' => 0,
+                                                                   'name' => 'test',
+                                                                 })
+          is_expected.to contain_concat__fragment('otelcol-config-extension-test')
+        }
       end
 
       context 'with logoptions' do
@@ -337,29 +284,24 @@ describe 'otelcol' do
             },
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge(
-            {
-              'extensions' => {},
-              'service' => {
-                'extensions' => [],
-                'pipelines' => {},
-                'telemetry' => {
-                  'logs' => {
-                    'level' => 'debug'
-                  },
-                  'metrics' => {
-                    'level' => 'basic',
-                    'address' => ':8888',
-                  },
+        let(:configcontent) do
+          {
+            'service' => {
+              'telemetry' => {
+                'logs' => {
+                  'level' => 'debug'
                 },
-              }
+                'metrics' => {
+                  'level' => 'basic',
+                  'address' => ':8888',
+                },
+              },
             }
-          )
+          }
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+        it { is_expected.to contain_concat__fragment('otelcol-config-baseconfig').with_content(configcontent.to_yaml) }
       end
 
       context 'with metrics config' do
@@ -370,27 +312,22 @@ describe 'otelcol' do
             metrics_address_port: 1234,
           }
         end
-        let(:configcontent_ext) do
-          configcontent.merge(
-            {
-              'extensions' => {},
-              'service' => {
-                'extensions' => [],
-                'pipelines' => {},
-                'telemetry' => {
-                  'logs' => {},
-                  'metrics' => {
-                    'level' => 'detailed',
-                    'address' => '127.0.0.1:1234',
-                  },
+        let(:configcontent) do
+          {
+            'service' => {
+              'telemetry' => {
+                'logs' => {},
+                'metrics' => {
+                  'level' => 'detailed',
+                  'address' => '127.0.0.1:1234',
                 },
-              }
+              },
             }
-          )
+          }
         end
 
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
+        it { is_expected.to contain_concat__fragment('otelcol-config-baseconfig').with_content(configcontent.to_yaml) }
       end
 
       context 'with service_ensure' do
@@ -425,9 +362,9 @@ describe 'otelcol' do
         let(:package_source) do
           case facts[:osfamily]
           when 'Debian'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol_0.79.0_linux_amd64.deb'
+            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.deb'
           when 'RedHat'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.79.0/otelcol_0.79.0_linux_amd64.rpm'
+            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.rpm'
           end
         end
         let(:package_localpath) do

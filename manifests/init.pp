@@ -36,6 +36,8 @@
 #   Host metrics are listening to
 # @param metrics_address_port
 #   Port metrics are listening to
+# @param service_ensure
+#   Ensure for service
 # @param manage_service
 #   If service is managed by module
 # @param manage_archive
@@ -56,32 +58,26 @@ class otelcol (
   String  $config_file_owner                     = 'root',
   String  $config_file_group                     = 'root',
   Stdlib::Filemode $config_file_mode             = '0644',
-  Hash    $receivers                             = {
-    'otlp' => {
-      'protocols' => {
-        'http' => {},
-        'grpc' => {},
-      },
-    },
-  },
-  Variant[Hash,String[1]]    $processors                            = {},
-  Variant[Hash,String[1]]    $exporters                             = {},
-  Variant[Hash,String[1]]    $pipelines                             = {},
-  Hash    $extensions                            = {},
+  Hash[String, Hash] $receivers = {},
+  Hash[String, Hash] $processors = {},
+  Hash[String, Hash] $exporters = {},
+  Hash[String, Hash] $pipelines = {},
+  Hash[String, Hash] $extensions = {},
   Variant[Hash,String[1]]    $log_options                            = {},
   Enum['none','basic','normal','detailed'] $metrics_level = 'basic',
   Optional[Stdlib::Host] $metrics_address_host    = undef,
   Stdlib::Port $metrics_address_port             = 8888,
-  Stdlib::Ensure::Service  $service_ensure       = 'running',
+  Stdlib::Ensure::Service $service_ensure       = 'running',
   Boolean $manage_service                        = true,
   Boolean $manage_archive                        = false,
   String[1] $localpath_archive                   = '/tmp',
   # Boolean $manage_user                           = false,
-  String[1] $archive_version                     = '0.79.0',
+  String[1] $archive_version                     = '0.89.0',
   String[1] $archive_location          = "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64",
 ) {
   contain otelcol::install
   contain otelcol::config
+
   if($manage_service) {
     contain otelcol::service
     Class['otelcol::config'] ~> Class['otelcol::service']

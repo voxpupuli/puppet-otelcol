@@ -1,14 +1,14 @@
-otelcol::receiver { 'otlp' :
+Otelcol::Receiver { 'otlp' :
   config    => {
     'protocols' => {
       'grpc' => { 'endpoint' => 'localhost:4317' },
       'http' => { 'endpoint' => 'localhost:4318' },
     },
   },
-  pipelines => ['metrics'],
+  pipelines => ['metrics','logs'],
 }
 
-otelcol::receiver { 'prometheus' :
+Otelcol::Receiver { 'prometheus' :
   config    => {
     'config' => {
       'scrape_configs' => [
@@ -25,14 +25,20 @@ otelcol::receiver { 'prometheus' :
   pipelines => ['metrics'],
 }
 
-otelcol::exporter { 'logging':
+Otelcol::Exporter { 'logging':
   config    => { 'verbosity' => 'detailed' },
-  pipelines => ['metrics'],
+  pipelines => ['metrics','logs'],
 }
 
-otelcol::processor { 'batch':
+Otelcol::Processor { 'batch/1':
   config    => {},
-  pipelines => ['metrics'],
+  pipelines => ['metrics','logs'],
+  order     => 1,
+}
+Otelcol::Processor { 'memory_limiter/2':
+  config    => { 'check_interval' => '5s', 'limit_mib' => 512 },
+  pipelines => ['metrics','logs'],
+  order     => 2,
 }
 
 class { 'otelcol':

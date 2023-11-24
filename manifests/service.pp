@@ -28,6 +28,6 @@ class otelcol::service (
     ensure    => $ensure,
     name      => $otelcol::service_name,
     require   => Package['otelcol'],
-    subscribe => [File['otelcol-config'], File['otelcol-environment']],
+    subscribe => [Concat['otelcol-config'], File['otelcol-environment']],
   }
 }

@@ -16,6 +16,24 @@
 
 * `otelcol::service`: Manages the Otelcol service
 
+### Defined types
+
+#### Public Defined types
+
+* [`otelcol::exporter`](#otelcol--exporter): Define a OpenTelemetry Collector exporter
+* [`otelcol::extension`](#otelcol--extension): Add an extension to the OpenTelemetry Collector configuration
+* [`otelcol::pipeline`](#otelcol--pipeline): Add a pipeline to the OpenTelemetry Collector configuration
+* [`otelcol::processor`](#otelcol--processor): Add a processor to the OpenTelemetry Collector configuration
+* [`otelcol::receiver`](#otelcol--receiver): Add a receiver to the OpenTelemetry Collector configuration
+
+#### Private Defined types
+
+* `otelcol::component`: Define a component for the OpenTelemetry Collector Configuration
+
+### Data types
+
+* [`Otelcol::Component::Name`](#Otelcol--Component--Name): Type for name of Otel Collector Ressources
+
 ## Classes
 
 ### <a name="otelcol"></a>`otelcol`
@@ -44,12 +62,12 @@ The following parameters are available in the `otelcol` class:
 * [`metrics_level`](#-otelcol--metrics_level)
 * [`metrics_address_host`](#-otelcol--metrics_address_host)
 * [`metrics_address_port`](#-otelcol--metrics_address_port)
+* [`service_ensure`](#-otelcol--service_ensure)
 * [`manage_service`](#-otelcol--manage_service)
 * [`manage_archive`](#-otelcol--manage_archive)
 * [`localpath_archive`](#-otelcol--localpath_archive)
 * [`archive_version`](#-otelcol--archive_version)
 * [`archive_location`](#-otelcol--archive_location)
-* [`service_ensure`](#-otelcol--service_ensure)
 
 ##### <a name="-otelcol--package_name"></a>`package_name`
 
@@ -125,26 +143,15 @@ Default value: `'0644'`
 
 ##### <a name="-otelcol--receivers"></a>`receivers`
 
-Data type: `Hash`
+Data type: `Hash[String, Hash]`
 
 Hash for receivers config
 
-Default value:
-
-```puppet
-{
-    'otlp' => {
-      'protocols' => {
-        'http' => {},
-        'grpc' => {},
-      },
-    },
-  }
-```
+Default value: `{}`
 
 ##### <a name="-otelcol--processors"></a>`processors`
 
-Data type: `Variant[Hash,String[1]]`
+Data type: `Hash[String, Hash]`
 
 Hash for processors config
 
@@ -152,7 +159,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--exporters"></a>`exporters`
 
-Data type: `Variant[Hash,String[1]]`
+Data type: `Hash[String, Hash]`
 
 Hash for exporters config
 
@@ -160,7 +167,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--pipelines"></a>`pipelines`
 
-Data type: `Variant[Hash,String[1]]`
+Data type: `Hash[String, Hash]`
 
 Hash for pipelines config
 
@@ -168,7 +175,7 @@ Default value: `{}`
 
 ##### <a name="-otelcol--extensions"></a>`extensions`
 
-Data type: `Hash`
+Data type: `Hash[String, Hash]`
 
 Hash for extensions config
 
@@ -206,6 +213,14 @@ Port metrics are listening to
 
 Default value: `8888`
 
+##### <a name="-otelcol--service_ensure"></a>`service_ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Ensure for service
+
+Default value: `'running'`
+
 ##### <a name="-otelcol--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
@@ -236,7 +251,7 @@ Data type: `String[1]`
 
 Version of otelcol that will be used, param is not used if archive_location is set
 
-Default value: `'0.79.0'`
+Default value: `'0.89.0'`
 
 ##### <a name="-otelcol--archive_location"></a>`archive_location`
 
@@ -245,14 +260,6 @@ Data type: `String[1]`
 Path to archive without filetype extension
 
 Default value: `"https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64"`
-
-##### <a name="-otelcol--service_ensure"></a>`service_ensure`
-
-Data type: `Stdlib::Ensure::Service`
-
-
-
-Default value: `'running'`
 
 ### <a name="otelcol--config"></a>`otelcol::config`
 
@@ -266,4 +273,267 @@ Templated generation of otelcol.conf
 
 Conditionally handle repos or package paths and install the necessary
 otelcol package.
+
+## Defined types
+
+### <a name="otelcol--exporter"></a>`otelcol::exporter`
+
+Create a OpenTelemetry Collector exporter in the configuration file.
+
+#### Examples
+
+##### Basic usage
+
+```puppet
+otelcol::exporter { 'namevar': }
+```
+
+##### Define a exporter and attach it to a pipeline
+
+```puppet
+otelcol::exporter { 'prometheus':
+  pipelines => ['metrics'],
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::exporter` defined type:
+
+* [`name`](#-otelcol--exporter--name)
+* [`config`](#-otelcol--exporter--config)
+* [`order`](#-otelcol--exporter--order)
+* [`pipelines`](#-otelcol--exporter--pipelines)
+
+##### <a name="-otelcol--exporter--name"></a>`name`
+
+The name of the exporter.
+
+##### <a name="-otelcol--exporter--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the exporter.
+
+Default value: `{}`
+
+##### <a name="-otelcol--exporter--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the exporter.
+
+Default value: `0`
+
+##### <a name="-otelcol--exporter--pipelines"></a>`pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines to attach the exporter to.
+
+Default value: `[]`
+
+### <a name="otelcol--extension"></a>`otelcol::extension`
+
+Add an extension to the OpenTelemetry Collector configuration
+
+#### Examples
+
+##### Basic usage
+
+```puppet
+otelcol::extension { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::extension` defined type:
+
+* [`name`](#-otelcol--extension--name)
+* [`config`](#-otelcol--extension--config)
+* [`order`](#-otelcol--extension--order)
+
+##### <a name="-otelcol--extension--name"></a>`name`
+
+The name of the extension
+
+##### <a name="-otelcol--extension--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration for the extension
+
+Default value: `{}`
+
+##### <a name="-otelcol--extension--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order in which the extension should be loaded
+
+Default value: `0`
+
+### <a name="otelcol--pipeline"></a>`otelcol::pipeline`
+
+Used for explicitly configuring a pipeline in the OpenTelemetry Collector.
+This is useful for configuring a pipeline that is not automatically
+configured by its Components.
+
+#### Examples
+
+##### Configure a pipeline
+
+```puppet
+otelcol::pipeline { 'namevar': }
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::pipeline` defined type:
+
+* [`name`](#-otelcol--pipeline--name)
+* [`config`](#-otelcol--pipeline--config)
+* [`order`](#-otelcol--pipeline--order)
+
+##### <a name="-otelcol--pipeline--name"></a>`name`
+
+The name of the pipeline to configure.
+
+##### <a name="-otelcol--pipeline--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration for the pipeline.
+
+Default value: `{}`
+
+##### <a name="-otelcol--pipeline--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order in which the pipeline should be configured.
+
+Default value: `0`
+
+### <a name="otelcol--processor"></a>`otelcol::processor`
+
+Add a processor to the OpenTelemetry Collector configuration
+
+#### Examples
+
+##### Basic usage
+
+```puppet
+otelcol::processor { 'namevar': }
+```
+
+##### Define a processor and attach it to a pipeline
+
+```puppet
+otelcol::processor { 'batch':
+  pipelines => ['metrics'],
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::processor` defined type:
+
+* [`name`](#-otelcol--processor--name)
+* [`config`](#-otelcol--processor--config)
+* [`order`](#-otelcol--processor--order)
+* [`pipelines`](#-otelcol--processor--pipelines)
+
+##### <a name="-otelcol--processor--name"></a>`name`
+
+The name of the processor
+
+##### <a name="-otelcol--processor--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the processor
+
+Default value: `{}`
+
+##### <a name="-otelcol--processor--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the processor
+
+Default value: `0`
+
+##### <a name="-otelcol--processor--pipelines"></a>`pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines to attach the processor to
+
+Default value: `[]`
+
+### <a name="otelcol--receiver"></a>`otelcol::receiver`
+
+Add a receiver to the OpenTelemetry Collector configuration
+
+#### Examples
+
+##### basic receiver
+
+```puppet
+otelcol::receiver { 'namevar': }
+```
+
+##### Define a receiver and attach it to a pipeline
+
+```puppet
+otelcol::receiver { 'otlp':
+  pipelines => ['metrics'],
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::receiver` defined type:
+
+* [`name`](#-otelcol--receiver--name)
+* [`config`](#-otelcol--receiver--config)
+* [`order`](#-otelcol--receiver--order)
+* [`pipelines`](#-otelcol--receiver--pipelines)
+
+##### <a name="-otelcol--receiver--name"></a>`name`
+
+The name of the receiver
+
+##### <a name="-otelcol--receiver--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the receiver
+
+Default value: `{}`
+
+##### <a name="-otelcol--receiver--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the receiver
+
+Default value: `0`
+
+##### <a name="-otelcol--receiver--pipelines"></a>`pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines the receiver is part of
+
+Default value: `[]`
+
+## Data types
+
+### <a name="Otelcol--Component--Name"></a>`Otelcol::Component::Name`
+
+Type for name of Otel Collector Ressources
+
+Alias of `Pattern[/\A[a-z0-9_-]+(\/[a-z0-9]+)?\z/]`
 
