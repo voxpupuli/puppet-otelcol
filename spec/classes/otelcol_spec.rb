@@ -276,38 +276,6 @@ describe 'otelcol' do
         }
       end
 
-      # context 'with include files' do
-      #   let :params do
-      #     {
-      #       processors: '${file:processors.yaml}',
-      #       exporters: '${file:exporters.yaml}',
-      #       pipelines: '${file:pipelines.yaml}',
-      #     }
-      #   end
-      #   let(:configcontent_ext) do
-      #     configcontent.merge(
-      #       {
-      #         'processors' => '${file:processors.yaml}',
-      #         'exporters' => '${file:exporters.yaml}',
-      #         'service' => {
-      #           'extensions' => [],
-      #           'pipelines' => '${file:pipelines.yaml}',
-      #           'telemetry' => {
-      #             'logs' => {},
-      #             'metrics' => {
-      #               'level' => 'basic',
-      #               'address' => ':8888',
-      #             },
-      #           },
-      #         }
-      #       }
-      #     )
-      #   end
-
-      #   it { is_expected.to compile.with_all_deps }
-      #   # it { is_expected.to contain_file('otelcol-config').with_content(configcontent_ext.to_yaml) }
-      # end
-
       context 'with logoptions' do
         let :params do
           {
