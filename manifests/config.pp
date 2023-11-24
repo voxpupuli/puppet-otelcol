@@ -54,10 +54,9 @@ class otelcol::config inherits otelcol {
   }
 
   $otelcol::processors.each|String $rname, Hash $rvalue| {
-    if($rvalue['config'] and $rvalue['config'].is_a(Hash)) {
+    if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::processor', $rname, $rvalue)
-    }
-    else {
+    } else {
       ensure_resource('otelcol::processor', $rname, { 'config' => $rvalue })
     }
   }
