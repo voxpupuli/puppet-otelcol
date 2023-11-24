@@ -8,8 +8,9 @@ describe 'Otelcol class with contrib' do
       it { is_expected.to be_enabled }
       it { is_expected.to be_running }
     end
+
     describe port(8889) do
-      it { should be_listening }
+      it { is_expected.to be_listening }
     end
   end
 end
