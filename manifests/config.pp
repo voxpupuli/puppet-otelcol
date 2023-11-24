@@ -53,7 +53,7 @@ class otelcol::config inherits otelcol {
     }
   }
 
-  $otelcol::processors.each|String $rname, Hash $rvalue| {
+  $otelcol::processors.each |String $rname, Hash $rvalue| {
     if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::processor', $rname, $rvalue)
     } else {
@@ -61,7 +61,7 @@ class otelcol::config inherits otelcol {
     }
   }
 
-  $otelcol::exporters.each|String $rname, Hash $rvalue| {
+  $otelcol::exporters.each |String $rname, Hash $rvalue| {
     if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::exporter', $rname, $rvalue)
     }
@@ -70,7 +70,7 @@ class otelcol::config inherits otelcol {
     }
   }
 
-  $otelcol::pipelines.each|String $rname, Hash $rvalue| {
+  $otelcol::pipelines.each |String $rname, Hash $rvalue| {
     if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::pipeline', $rname, $rvalue)
     }
@@ -79,7 +79,7 @@ class otelcol::config inherits otelcol {
     }
   }
 
-  $otelcol::extensions.each|String $rname, Hash $rvalue| {
+  $otelcol::extensions.each |String $rname, Hash $rvalue| {
     if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::extension', $rname, $rvalue)
     }
