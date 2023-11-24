@@ -10,6 +10,10 @@
 #   The pipelines the receiver is part of
 # @example basic receiver
 #   otelcol::receiver { 'namevar': }
+# @example Define a receiver and attach it to a pipeline
+#   otelcol::receiver { 'otlp':
+#     pipelines => ['metrics'],
+#   }
 define otelcol::receiver (
   Hash $config = {},
   Integer[0,999] $order = 0,

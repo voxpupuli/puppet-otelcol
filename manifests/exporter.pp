@@ -10,8 +10,12 @@
 #  The order of the exporter.
 # @param pipelines
 #  The pipelines to attach the exporter to.
-# @example
+# @example Basic usage
 #   otelcol::exporter { 'namevar': }
+# @example Define a exporter and attach it to a pipeline
+#   otelcol::exporter { 'prometheus':
+#     pipelines => ['metrics'],
+#   }
 define otelcol::exporter (
   Hash $config = {},
   Integer[0,999] $order = 0,

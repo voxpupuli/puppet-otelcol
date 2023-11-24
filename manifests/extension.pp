@@ -7,7 +7,7 @@
 # @param order
 #   The order in which the extension should be loaded
 #
-# @example
+# @example Basic usage
 #   otelcol::extension { 'namevar': }
 define otelcol::extension (
   Hash $config = {},

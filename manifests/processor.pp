@@ -9,8 +9,12 @@
 # @param pipelines
 #   The pipelines to attach the processor to
 #
-# @example
+# @example Basic usage
 #   otelcol::processor { 'namevar': }
+# @example Define a processor and attach it to a pipeline
+#   otelcol::processor { 'batch':
+#     pipelines => ['metrics'],
+#   }
 define otelcol::processor (
   Hash $config = {},
   Integer[0,999] $order = 0,

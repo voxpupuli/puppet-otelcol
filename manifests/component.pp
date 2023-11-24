@@ -13,7 +13,7 @@
 # @param pipelines
 #   The pipelines to add the component to
 #
-# @example
+# @example Basic Usage
 #   otelcol::component { 'receiver_name-receiver':': 
 #     component_name => 'receiver_name',
 #     type           => 'receiver',

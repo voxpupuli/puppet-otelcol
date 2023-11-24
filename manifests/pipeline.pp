@@ -10,7 +10,7 @@
 #   The configuration for the pipeline.
 # @param order
 #   The order in which the pipeline should be configured.  
-# @example
+# @example Configure a pipeline
 #   otelcol::pipeline { 'namevar': }
 define otelcol::pipeline (
   Hash $config = {},

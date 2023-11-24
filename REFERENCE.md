@@ -278,10 +278,18 @@ Create a OpenTelemetry Collector exporter in the configuration file.
 
 #### Examples
 
-##### 
+##### Basic usage
 
 ```puppet
 otelcol::exporter { 'namevar': }
+```
+
+##### Define a exporter and attach it to a pipeline
+
+```puppet
+otelcol::exporter { 'prometheus':
+  pipelines => ['metrics'],
+}
 ```
 
 #### Parameters
@@ -327,7 +335,7 @@ Add an extension to the OpenTelemetry Collector configuration
 
 #### Examples
 
-##### 
+##### Basic usage
 
 ```puppet
 otelcol::extension { 'namevar': }
@@ -369,7 +377,7 @@ configured by its Components.
 
 #### Examples
 
-##### 
+##### Configure a pipeline
 
 ```puppet
 otelcol::pipeline { 'namevar': }
@@ -409,10 +417,18 @@ Add a processor to the OpenTelemetry Collector configuration
 
 #### Examples
 
-##### 
+##### Basic usage
 
 ```puppet
 otelcol::processor { 'namevar': }
+```
+
+##### Define a processor and attach it to a pipeline
+
+```puppet
+otelcol::processor { 'batch':
+  pipelines => ['metrics'],
+}
 ```
 
 #### Parameters
@@ -462,6 +478,14 @@ Add a receiver to the OpenTelemetry Collector configuration
 
 ```puppet
 otelcol::receiver { 'namevar': }
+```
+
+##### Define a receiver and attach it to a pipeline
+
+```puppet
+otelcol::receiver { 'otlp':
+  pipelines => ['metrics'],
+}
 ```
 
 #### Parameters
