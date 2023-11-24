@@ -36,6 +36,8 @@
 #   Host metrics are listening to
 # @param metrics_address_port
 #   Port metrics are listening to
+# @param service_ensure
+#   Ensure for service
 # @param manage_service
 #   If service is managed by module
 # @param manage_archive

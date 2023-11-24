@@ -58,12 +58,12 @@ The following parameters are available in the `otelcol` class:
 * [`metrics_level`](#-otelcol--metrics_level)
 * [`metrics_address_host`](#-otelcol--metrics_address_host)
 * [`metrics_address_port`](#-otelcol--metrics_address_port)
+* [`service_ensure`](#-otelcol--service_ensure)
 * [`manage_service`](#-otelcol--manage_service)
 * [`manage_archive`](#-otelcol--manage_archive)
 * [`localpath_archive`](#-otelcol--localpath_archive)
 * [`archive_version`](#-otelcol--archive_version)
 * [`archive_location`](#-otelcol--archive_location)
-* [`service_ensure`](#-otelcol--service_ensure)
 
 ##### <a name="-otelcol--package_name"></a>`package_name`
 
@@ -209,6 +209,14 @@ Port metrics are listening to
 
 Default value: `8888`
 
+##### <a name="-otelcol--service_ensure"></a>`service_ensure`
+
+Data type: `Stdlib::Ensure::Service`
+
+Ensure for service
+
+Default value: `'running'`
+
 ##### <a name="-otelcol--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
@@ -248,14 +256,6 @@ Data type: `String[1]`
 Path to archive without filetype extension
 
 Default value: `"https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64"`
-
-##### <a name="-otelcol--service_ensure"></a>`service_ensure`
-
-Data type: `Stdlib::Ensure::Service`
-
-
-
-Default value: `'running'`
 
 ### <a name="otelcol--config"></a>`otelcol::config`
 
