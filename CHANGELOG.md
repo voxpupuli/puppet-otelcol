@@ -15,9 +15,14 @@ These should not affect the functionality of the module.
 
 **Implemented enhancements:**
 
+- Add support for Debian 12 [\#9](https://github.com/voxpupuli/puppet-otelcol/pull/9) ([voxel01](https://github.com/voxel01))
 - Add acceptance tests [\#6](https://github.com/voxpupuli/puppet-otelcol/pull/6) ([voxel01](https://github.com/voxel01))
 - Add includefile [\#5](https://github.com/voxpupuli/puppet-otelcol/pull/5) ([voxel01](https://github.com/voxel01))
 - Add service config [\#4](https://github.com/voxpupuli/puppet-otelcol/pull/4) ([voxel01](https://github.com/voxel01))
+
+**Fixed bugs:**
+
+- Fix installation with archive [\#7](https://github.com/voxpupuli/puppet-otelcol/pull/7) ([voxel01](https://github.com/voxel01))
 
 **Closed issues:**
 
@@ -27,8 +32,6 @@ These should not affect the functionality of the module.
 
 - Drop broken OL 7 testing [\#13](https://github.com/voxpupuli/puppet-otelcol/pull/13) ([bastelfreak](https://github.com/bastelfreak))
 - fixtures.yml: Pull dependencies from git [\#12](https://github.com/voxpupuli/puppet-otelcol/pull/12) ([bastelfreak](https://github.com/bastelfreak))
-- Add support for Debian 12 [\#9](https://github.com/voxpupuli/puppet-otelcol/pull/9) ([voxel01](https://github.com/voxel01))
-- Fix installation with archive [\#7](https://github.com/voxpupuli/puppet-otelcol/pull/7) ([voxel01](https://github.com/voxel01))
 - Initial implementation [\#1](https://github.com/voxpupuli/puppet-otelcol/pull/1) ([cyberkov](https://github.com/cyberkov))
 
 
