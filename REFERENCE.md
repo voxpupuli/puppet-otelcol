@@ -30,6 +30,10 @@
 
 * `otelcol::component`: Define a component for the OpenTelemetry Collector Configuration
 
+### Data types
+
+* [`Otelcol::Component::Name`](#Otelcol--Component--Name): Type for name of Otel Collector Ressources
+
 ## Classes
 
 ### <a name="otelcol"></a>`otelcol`
@@ -524,4 +528,12 @@ Data type: `Array[String[1]]`
 The pipelines the receiver is part of
 
 Default value: `[]`
+
+## Data types
+
+### <a name="Otelcol--Component--Name"></a>`Otelcol::Component::Name`
+
+Type for name of Otel Collector Ressources
+
+Alias of `Pattern[/\A[a-z0-9_-]+(\/[a-z0-9]+)?\z/]`
 
