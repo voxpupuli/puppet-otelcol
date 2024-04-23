@@ -341,6 +341,17 @@ describe 'otelcol' do
         it { is_expected.to contain_service('otelcol').with_ensure('stopped') }
       end
 
+      context 'with service_configcheck' do
+        let :params do
+          {
+            service_configcheck: true,
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_service('otelcol').that_requires('Exec[otelcol_config_check]') }
+      end
+
       context 'do not manage Service' do
         let :params do
           {
