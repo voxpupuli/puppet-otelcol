@@ -47,6 +47,7 @@ The following parameters are available in the `otelcol` class:
 * [`package_name`](#-otelcol--package_name)
 * [`package_ensure`](#-otelcol--package_ensure)
 * [`service_name`](#-otelcol--service_name)
+* [`service_configcheck`](#-otelcol--service_configcheck)
 * [`environment_file`](#-otelcol--environment_file)
 * [`run_options`](#-otelcol--run_options)
 * [`config_file`](#-otelcol--config_file)
@@ -92,6 +93,14 @@ Data type: `String`
 Name of the service used
 
 Default value: `$package_name`
+
+##### <a name="-otelcol--service_configcheck"></a>`service_configcheck`
+
+Data type: `Boolean`
+
+Check config before service reloads
+
+Default value: `true`
 
 ##### <a name="-otelcol--environment_file"></a>`environment_file`
 
