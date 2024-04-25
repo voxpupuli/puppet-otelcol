@@ -6,6 +6,8 @@
 #   Ensure for the package
 # @param service_name
 #   Name of the service used
+# @param service_configcheck
+#   Check config before service reloads
 # @param environment_file
 #   path of the environment file used for service
 # @param run_options
@@ -52,6 +54,7 @@ class otelcol (
   String  $package_name                          = 'otelcol',
   Enum['present','absent','installed','latest']  $package_ensure       = 'installed',
   String  $service_name                          = $package_name,
+  Boolean $service_configcheck                   = true,
   String  $environment_file                      = "/etc/${package_name}/${package_name}.conf",
   Optional[String]  $run_options                 = undef,
   String  $config_file                           = "/etc/${package_name}/config.yaml",

@@ -14,20 +14,36 @@
 # @api private
 class otelcol::service (
   Stdlib::Ensure::Service $ensure            = $otelcol::service_ensure,
+  String  $config_check_command              = "${otelcol::service_name} validate --config=${otelcol::config_file}",
+  Boolean $config_check                      = $otelcol::service_configcheck,
 ) {
   # include install
   include otelcol::install
 
-  # systemd::dropin_file { 'otelcol_service':
-  #   unit     => 'otelcol.service',
-  #   content  => epp('otelcol/otelcol.dropin.epp'),
-  #   filename => 'otelcol_override.conf',
-  # }
-  # ~>
+  if $config_check {
+    exec { 'otelcol_config_check':
+      command     => $config_check_command,
+      refreshonly => true,
+      path        => [
+        '/usr/local/sbin',
+        '/usr/local/bin',
+        '/usr/sbin',
+        '/usr/bin',
+        '/sbin',
+        '/bin',
+      ],
+    }
+  }
+
+  $service_require = $config_check ? {
+    true => [Exec['otelcol_config_check'], Package['otelcol']],
+    false => Package['otelcol'],
+  }
+
   service { 'otelcol':
     ensure    => $ensure,
     name      => $otelcol::service_name,
-    require   => Package['otelcol'],
+    require   => $service_require,
     subscribe => [Concat['otelcol-config'], File['otelcol-environment']],
   }
 }
