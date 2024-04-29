@@ -17,12 +17,13 @@ class otelcol::config inherits otelcol {
   }
 
   concat { 'otelcol-config' :
-    ensure => present,
-    path   => $otelcol::config_file,
-    format => 'yaml',
-    owner  => $otelcol::config_file_owner,
-    group  => $otelcol::config_file_group,
-    mode   => $otelcol::config_file_mode,
+    ensure  => present,
+    path    => $otelcol::config_file,
+    format  => 'yaml',
+    owner   => $otelcol::config_file_owner,
+    group   => $otelcol::config_file_group,
+    mode    => $otelcol::config_file_mode,
+    require => Package['otelcol'],
   }
   concat::fragment { 'otelcol-config-header' :
     target  => 'otelcol-config',
