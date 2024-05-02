@@ -17,7 +17,7 @@
 #   }
 define otelcol::processor (
   Hash $config = {},
-  Integer[0,999] $order = 0,
+  Integer[0,999] $order = 10,
   Array[String[1]] $pipelines = [],
 ) {
   $real_order = 2000+$order
