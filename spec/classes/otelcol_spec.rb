@@ -203,7 +203,7 @@ describe 'otelcol' do
           is_expected.to contain_otelcol__processor('test').with({
                                                                    'config' => {},
                                                                    'pipelines' => [],
-                                                                   'order' => 0,
+                                                                   'order' => 10,
                                                                    'name' => 'test',
                                                                  })
           is_expected.to contain_otelcol__component('test-processors')
