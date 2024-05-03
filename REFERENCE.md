@@ -471,7 +471,7 @@ Data type: `Integer[0,999]`
 
 The order of the processor
 
-Default value: `0`
+Default value: `10`
 
 ##### <a name="-otelcol--processor--pipelines"></a>`pipelines`
 
