@@ -20,6 +20,9 @@
 #   group of config_file
 # @param config_file_mode
 #   mode of config_file
+# @param configs
+#   additional config files or resources to add. Since this can be environment variables, http urls or files
+#   you are required to ensure the existence of a file!
 # @param receivers
 #   Hash for receivers config
 # @param processors
@@ -61,6 +64,7 @@ class otelcol (
   String  $config_file_owner                     = 'root',
   String  $config_file_group                     = 'root',
   Stdlib::Filemode $config_file_mode             = '0644',
+  Array[String] $configs                         = [],
   Hash[String, Hash] $receivers = {},
   Hash[String, Hash] $processors = {},
   Hash[String, Hash] $exporters = {},
