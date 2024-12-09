@@ -145,6 +145,17 @@ describe 'otelcol' do
         }
       end
 
+      context 'with configs' do
+        let :params do
+          {
+            configs: ['customconfig.yaml', 'env:MY_CONFIG_IN_AN_ENVVAR', 'https://server/config.yaml', '"yaml:exporters::debug::verbosity: normal"']
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_file('otelcol-environment').with_content(%r{--config=/etc/otelcol/config.yaml --config=customconfig.yaml --config=env:MY_CONFIG_IN_AN_ENVVAR --config=https://server/config.yaml --config="yaml:exporters::debug::verbosity: normal"}) }
+      end
+
       context 'with config_file owner' do
         let :params do
           {

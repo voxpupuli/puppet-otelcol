@@ -54,6 +54,7 @@ The following parameters are available in the `otelcol` class:
 * [`config_file_owner`](#-otelcol--config_file_owner)
 * [`config_file_group`](#-otelcol--config_file_group)
 * [`config_file_mode`](#-otelcol--config_file_mode)
+* [`configs`](#-otelcol--configs)
 * [`receivers`](#-otelcol--receivers)
 * [`processors`](#-otelcol--processors)
 * [`exporters`](#-otelcol--exporters)
@@ -149,6 +150,15 @@ Data type: `Stdlib::Filemode`
 mode of config_file
 
 Default value: `'0644'`
+
+##### <a name="-otelcol--configs"></a>`configs`
+
+Data type: `Array[String]`
+
+additional config files or resources to add. Since this can be environment variables, http urls or files
+you are required to ensure the existence of a file!
+
+Default value: `[]`
 
 ##### <a name="-otelcol--receivers"></a>`receivers`
 
