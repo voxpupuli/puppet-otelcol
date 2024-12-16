@@ -65,6 +65,7 @@ The following parameters are available in the `otelcol` class:
 * [`metrics_address_host`](#-otelcol--metrics_address_host)
 * [`metrics_address_port`](#-otelcol--metrics_address_port)
 * [`service_ensure`](#-otelcol--service_ensure)
+* [`service_enable`](#-otelcol--service_enable)
 * [`manage_service`](#-otelcol--manage_service)
 * [`manage_archive`](#-otelcol--manage_archive)
 * [`localpath_archive`](#-otelcol--localpath_archive)
@@ -239,6 +240,14 @@ Data type: `Stdlib::Ensure::Service`
 Ensure for service
 
 Default value: `'running'`
+
+##### <a name="-otelcol--service_enable"></a>`service_enable`
+
+Data type: `Boolean`
+
+Enable the service on boot
+
+Default value: `true`
 
 ##### <a name="-otelcol--manage_service"></a>`manage_service`
 
