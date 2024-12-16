@@ -33,6 +33,7 @@ describe 'otelcol' do
         it {
           is_expected.to contain_class('otelcol::service')
           is_expected.to contain_service('otelcol').with_ensure('running').with_name('otelcol')
+          is_expected.to contain_service('otelcol').with_enable('true').with_name('otelcol')
         }
       end
 

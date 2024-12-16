@@ -11,9 +11,13 @@
 # @param ensure
 #   Ensure service status
 #
+# @param enable
+#   Enable service on boot
+#
 # @api private
 class otelcol::service (
   Stdlib::Ensure::Service $ensure            = $otelcol::service_ensure,
+  Boolean $enable                            = $otelcol::service_enable,
   String  $config_check_command              = "${otelcol::service_name} validate --config=${otelcol::config_file}",
   Boolean $config_check                      = $otelcol::service_configcheck,
 ) {
@@ -42,6 +46,7 @@ class otelcol::service (
 
   service { 'otelcol':
     ensure    => $ensure,
+    enable    => $enable,
     name      => $otelcol::service_name,
     require   => $service_require,
     subscribe => [Concat['otelcol-config'], File['otelcol-environment']],

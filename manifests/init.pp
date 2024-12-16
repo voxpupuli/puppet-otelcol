@@ -43,6 +43,8 @@
 #   Port metrics are listening to
 # @param service_ensure
 #   Ensure for service
+# @param service_enable
+#   Enable the service on boot
 # @param manage_service
 #   If service is managed by module
 # @param manage_archive
@@ -75,6 +77,7 @@ class otelcol (
   Optional[Stdlib::Host] $metrics_address_host    = undef,
   Stdlib::Port $metrics_address_port             = 8888,
   Stdlib::Ensure::Service $service_ensure       = 'running',
+  Boolean $service_enable                        = true,
   Boolean $manage_service                        = true,
   Boolean $manage_archive                        = false,
   String[1] $localpath_archive                   = '/tmp',
