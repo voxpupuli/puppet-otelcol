@@ -20,7 +20,7 @@ describe 'otelcol::processor' do
 
       it {
         is_expected.to contain_otelcol__component('batch-processors').with({
-                                                                             'order' => 2000,
+                                                                             'order' => 2010,
                                                                              'config' => {
                                                                                'key' => 'value',
                                                                              },
@@ -32,7 +32,7 @@ describe 'otelcol::processor' do
 
       it {
         is_expected.to contain_concat__fragment('otelcol-config-processors-batch').with({
-                                                                                          'order' => 2000,
+                                                                                          'order' => 2010,
                                                                                           'target' => 'otelcol-config',
                                                                                         })
       }
