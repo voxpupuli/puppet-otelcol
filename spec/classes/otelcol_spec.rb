@@ -81,7 +81,7 @@ describe 'otelcol' do
           end
 
           let(:package_source) do
-            case facts[:osfamily]
+            case facts[:os]['family']
             when 'Debian'
               'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol-contrib_0.89.0_linux_amd64.deb'
             when 'RedHat'
@@ -383,7 +383,7 @@ describe 'otelcol' do
         end
 
         let(:package_source) do
-          case facts[:osfamily]
+          case facts[:os]['family']
           when 'Debian'
             'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.deb'
           when 'RedHat'
@@ -408,7 +408,7 @@ describe 'otelcol' do
         end
 
         let(:package_source) do
-          case facts[:osfamily]
+          case facts[:os]['family']
           when 'Debian'
             'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.74.0/otelcol_0.74.0_linux_amd64.deb'
           when 'RedHat'
