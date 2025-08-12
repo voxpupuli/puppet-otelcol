@@ -321,8 +321,6 @@ describe 'otelcol' do
         let :params do
           {
             metrics_level: 'detailed',
-            metrics_address_host: '127.0.0.1',
-            metrics_address_port: 1234,
           }
         end
         let(:configcontent) do
@@ -332,7 +330,6 @@ describe 'otelcol' do
                 'logs' => {},
                 'metrics' => {
                   'level' => 'detailed',
-                  'address' => '127.0.0.1:1234',
                 },
               },
             }
