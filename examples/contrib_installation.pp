@@ -25,7 +25,7 @@ otelcol::receiver { 'prometheus' :
   pipelines => ['metrics'],
 }
 
-otelcol::exporter { 'logging':
+otelcol::exporter { 'debug':
   config    => { 'verbosity' => 'detailed' },
   pipelines => ['metrics'],
 }
@@ -36,7 +36,8 @@ otelcol::processor { 'batch':
 }
 
 class { 'otelcol':
-  manage_archive       => true,
-  package_name         => 'otelcol-contrib',
-  metrics_address_port => 8889,
+  manage_archive      => true,
+  package_name        => 'otelcol-contrib',
+  archive_version     => '0.132.4',
+  telemetry_exporters => [{ 'prometheus' => { 'host' => '0.0.0.0', 'port' => 8889 } }],
 }
