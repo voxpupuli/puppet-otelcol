@@ -4,13 +4,35 @@
 #
 class otelcol::config inherits otelcol {
   assert_private()
+  $metrics_readers = $otelcol::metrics_mode ? {
+    'pull' => [
+      'pull'  => {
+        'exporter' => {
+          'prometheus' => {
+            'host' => $otelcol::metrics_prometheus_host,
+            'port' => $otelcol::metrics_prometheus_port,
+          },
+        },
+      },
+    ],
+    'push' => [
+      'periodic'  => {
+        'exporter' => {
+          'otlp' => {
+            'protocol' => $otelcol::metrics_otlp_protocol,
+            'endpoint' => $otelcol::metrics_otlp_endpoint,
+          },
+        },
+      },
+    ],
+  }
   $component = {
     'service' => {
       'telemetry' => {
         'logs' => $otelcol::log_options,
         'metrics' => {
           'level' => $otelcol::metrics_level,
-          'address' => "${otelcol::metrics_address_host}:${otelcol::metrics_address_port}",
+          'readers' => $otelcol::metrics_readers,
         },
       },
     },
