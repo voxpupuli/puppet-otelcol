@@ -71,6 +71,8 @@ The following parameters are available in the `otelcol` class:
 * [`localpath_archive`](#-otelcol--localpath_archive)
 * [`archive_version`](#-otelcol--archive_version)
 * [`archive_location`](#-otelcol--archive_location)
+* [`proxy_host`](#-otelcol--proxy_host)
+* [`proxy_port`](#-otelcol--proxy_port)
 
 ##### <a name="-otelcol--package_name"></a>`package_name`
 
@@ -288,6 +290,22 @@ Data type: `String[1]`
 Path to archive without filetype extension
 
 Default value: `"https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64"`
+
+##### <a name="-otelcol--proxy_host"></a>`proxy_host`
+
+Data type: `Optional[Stdlib::Host]`
+
+
+
+Default value: `undef`
+
+##### <a name="-otelcol--proxy_port"></a>`proxy_port`
+
+Data type: `Stdlib::Port`
+
+
+
+Default value: `8888`
 
 ### <a name="otelcol--config"></a>`otelcol::config`
 

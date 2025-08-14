@@ -4,6 +4,8 @@
 #
 class otelcol::config inherits otelcol {
   assert_private()
+  $proxy_host = $otelcol::proxy_host
+  $proxy_port = $otelcol::proxy_port
   $component = {
     'service' => {
       'telemetry' => {
