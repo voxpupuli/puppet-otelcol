@@ -35,12 +35,6 @@
 #   Hash for extensions config
 # @param log_options
 #   Hash for log_options config
-# @param metrics_level
-#   Level for metrics config
-# @param metrics_address_host
-#   Host metrics are listening to
-# @param metrics_address_port
-#   Port metrics are listening to
 # @param service_ensure
 #   Ensure for service
 # @param service_enable
@@ -73,9 +67,7 @@ class otelcol (
   Hash[String, Hash] $pipelines = {},
   Hash[String, Hash] $extensions = {},
   Variant[Hash,String[1]]    $log_options                            = {},
-  Enum['none','basic','normal','detailed'] $metrics_level = 'basic',
-  Optional[Stdlib::Host] $metrics_address_host    = undef,
-  Stdlib::Port $metrics_address_port             = 8888,
+  Array[Otelcol::Exporter] $telemetry_exporters = [{ 'prometheus' => { 'host' => '0.0.0.0', 'port' => 8888 } }],
   Stdlib::Ensure::Service $service_ensure       = 'running',
   Boolean $service_enable                        = true,
   Boolean $manage_service                        = true,

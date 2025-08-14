@@ -4,13 +4,27 @@
 #
 class otelcol::config inherits otelcol {
   assert_private()
+  $metrics_readers = $otelcol::telemetry_exporters.map |String $name, Otelcol::Exporter $value| {
+    $value ? {
+      Otel::Exporter::Pull => {
+        'pull' => {
+          'exporter' => { $name => $value },
+        },
+      },
+      Otel::Exporter::Periodic => {
+        'periodic' => {
+          'exporter' => { $name => $value },
+        },
+      },
+    }
+  }
   $component = {
     'service' => {
       'telemetry' => {
         'logs' => $otelcol::log_options,
         'metrics' => {
           'level' => $otelcol::metrics_level,
-          'address' => "${otelcol::metrics_address_host}:${otelcol::metrics_address_port}",
+          'readers' => $metrics_readers,
         },
       },
     },
