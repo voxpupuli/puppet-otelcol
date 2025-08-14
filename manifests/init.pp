@@ -35,18 +35,6 @@
 #   Hash for extensions config
 # @param log_options
 #   Hash for log_options config
-# @param metrics_level
-#   Level for metrics config
-# @param metrics_mode
-#   Mode for metrics config either pull or push
-# @param metrics_prometheus_host
-#   Host for internal telemetry Prometheus metrics
-# @param metrics_prometheus_port
-#   Port for internal telemetry Prometheus metrics
-# @param metrics_otlp_endpoint
-#   OTLP endpoint for internal telemetry metrics
-# @param metrics_otlp_protocol
-#   OTLP protocol for internal telemetry metrics
 # @param service_ensure
 #   Ensure for service
 # @param service_enable
@@ -79,12 +67,7 @@ class otelcol (
   Hash[String, Hash] $pipelines = {},
   Hash[String, Hash] $extensions = {},
   Variant[Hash,String[1]]    $log_options                            = {},
-  Enum['pull','push'] $metrics_mode = 'pull',
-  Enum['none','basic','normal','detailed'] $metrics_level = 'basic',
-  Stdlib::Host $metrics_prometheus_host = '0.0.0.0',
-  Stdlib::Port $metrics_prometheus_port = 8888,
-  Stdlib::HTTPSUrl $metrics_otlp_endpoint = 'https://backend:4318',
-  String[1] $metrics_otlp_protocol = 'http/protobuf',
+  Array[Otelcol::Exporter] $telemetry_exporters = [{ 'prometheus' => { 'host' => '0.0.0.0', 'port' => 8888 } }],
   Stdlib::Ensure::Service $service_ensure       = 'running',
   Boolean $service_enable                        = true,
   Boolean $manage_service                        = true,
