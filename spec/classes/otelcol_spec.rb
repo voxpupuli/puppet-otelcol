@@ -353,6 +353,18 @@ describe 'otelcol' do
         it { is_expected.to contain_service('otelcol').with_ensure('stopped') }
       end
 
+      context 'with proxy_host' do
+        let :params do
+          {
+            proxy_host: '127.0.0.1',
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_file('otelcol-environment').with_content(%r{HTTP_PROXY="127.0.0.1:8888"}) }
+        it { is_expected.to contain_file('otelcol-environment').with_content(%r{HTTPS_PROXY="127.0.0.1:8888"}) }
+      end
+
       context 'with service_configcheck' do
         let :params do
           {
