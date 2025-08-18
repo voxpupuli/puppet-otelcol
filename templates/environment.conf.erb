@@ -4,3 +4,7 @@
 # Command-line options for the <%= scope.lookupvar('otelcol::package_name')%>  service.
 # Run `/usr/bin/<%= scope.lookupvar('otelcol::package_name') %>  --help` to see all available options.
 OTELCOL_OPTIONS="<%= scope.lookupvar('otelcol::run_options')%> --config=<%= scope.lookupvar('otelcol::config_file') %><% unless scope.lookupvar('otelcol::configs').empty? -%> --config=<%= scope.lookupvar('otelcol::configs').join(' --config=') %><% end -%>"
+<%- unless @proxy_host.nil? -%>
+HTTP_PROXY="<%= @proxy_host %>:<%= @proxy_port %>"
+HTTPS_PROXY="<%= @proxy_host %>:<%= @proxy_port %>"
+<%- end -%>
