@@ -84,9 +84,9 @@ describe 'otelcol' do
           let(:package_source) do
             case facts[:os]['family']
             when 'Debian'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol-contrib_0.89.0_linux_amd64.deb'
+              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol-contrib_0.132.4_linux_amd64.deb'
             when 'RedHat'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol-contrib_0.89.0_linux_amd64.rpm'
+              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol-contrib_0.132.4_linux_amd64.rpm'
             end
           end
           let(:package_localpath) do
@@ -398,9 +398,9 @@ describe 'otelcol' do
         let(:package_source) do
           case facts[:os]['family']
           when 'Debian'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.deb'
+            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_linux_amd64.deb'
           when 'RedHat'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.89.0/otelcol_0.89.0_linux_amd64.rpm'
+            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_linux_amd64.rpm'
           end
         end
         let(:package_localpath) do
