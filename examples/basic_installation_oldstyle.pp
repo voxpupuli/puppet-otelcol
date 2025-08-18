@@ -21,12 +21,12 @@ class { 'otelcol':
       },
     },
   },
-  exporters      => { 'logging' => { 'verbosity' => 'detailed' } },
+  exporters      => { 'debug' => { 'verbosity' => 'detailed' } },
   pipelines      => {
     'metrics' => {
       'receivers'  => ['otlp', 'prometheus'],
       'processors' => ['batch'],
-      'exporters'  => ['logging'],
+      'exporters'  => ['debug'],
     },
   },
   processors     => { 'batch' => {} },

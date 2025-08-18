@@ -25,7 +25,7 @@ otelcol::receiver { 'prometheus' :
   pipelines => ['metrics'],
 }
 
-otelcol::exporter { 'logging':
+otelcol::exporter { 'debug':
   config    => { 'verbosity' => 'detailed' },
   pipelines => ['metrics'],
 }
