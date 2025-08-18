@@ -6,13 +6,23 @@ class otelcol::config inherits otelcol {
   assert_private()
   $proxy_host = $otelcol::proxy_host
   $proxy_port = $otelcol::proxy_port
+  $metrics_readers = $otelcol::telemetry_exporters.map |Hash $hash_element| {
+    $hash_element.map |String $name, Hash $value| {
+      $type = $value ? {
+        Otelcol::Telemetry_exporter::Pull     => 'pull',
+        Otelcol::Telemetry_exporter::Periodic => 'periodic',
+      }
+      $element = { $type => { 'exporter' => { $name => $value } } }
+      $element
+    }
+  }.flatten
   $component = {
     'service' => {
       'telemetry' => {
         'logs' => $otelcol::log_options,
         'metrics' => {
           'level' => $otelcol::metrics_level,
-          'address' => "${otelcol::metrics_address_host}:${otelcol::metrics_address_port}",
+          'readers' => $metrics_readers,
         },
       },
     },
