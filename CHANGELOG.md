@@ -4,6 +4,30 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v8.4.0](https://github.com/voxpupuli/puppet-otelcol/tree/v8.4.0) (2025-08-19)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-otelcol/compare/v1.0.0...v8.4.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#32](https://github.com/voxpupuli/puppet-otelcol/pull/32) ([TheMeier](https://github.com/TheMeier))
+- Change the default value for `$otelcol::processors::order` to 10 [\#22](https://github.com/voxpupuli/puppet-otelcol/pull/22) ([cyberkov](https://github.com/cyberkov))
+
+**Implemented enhancements:**
+
+- metadata.json: Add OpenVox [\#28](https://github.com/voxpupuli/puppet-otelcol/pull/28) ([jstraw](https://github.com/jstraw))
+- Feature: support multiple configs [\#26](https://github.com/voxpupuli/puppet-otelcol/pull/26) ([cyberkov](https://github.com/cyberkov))
+- Add support for Puppet 8 [\#20](https://github.com/voxpupuli/puppet-otelcol/pull/20) ([voxel01](https://github.com/voxel01))
+- implement configfile validation [\#18](https://github.com/voxpupuli/puppet-otelcol/pull/18) ([cyberkov](https://github.com/cyberkov))
+
+**Fixed bugs:**
+
+- Fix: add service enable flag [\#27](https://github.com/voxpupuli/puppet-otelcol/pull/27) ([cyberkov](https://github.com/cyberkov))
+
+**Merged pull requests:**
+
+- otelcol::config: Add proxy support [\#35](https://github.com/voxpupuli/puppet-otelcol/pull/35) ([b4ldr](https://github.com/b4ldr))
+
 ## [v1.0.0](https://github.com/voxpupuli/puppet-otelcol/tree/v1.0.0) (2023-11-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-otelcol/compare/d13c240d1433ac4a0d925dddb33b0bd9250f87ef...v1.0.0)
