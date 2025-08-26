@@ -581,5 +581,5 @@ Default value: `[]`
 
 Type for name of Otel Collector Ressources
 
-Alias of `Pattern[/\A[a-z0-9_-]+(\/[a-z0-9]+)?\z/]`
+Alias of `Pattern[/\A[a-z0-9_-]+(\/[a-z0-9_-]+)?\z/]`
 
