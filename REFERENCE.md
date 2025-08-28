@@ -62,8 +62,11 @@ The following parameters are available in the `otelcol` class:
 * [`extensions`](#-otelcol--extensions)
 * [`log_options`](#-otelcol--log_options)
 * [`metrics_level`](#-otelcol--metrics_level)
-* [`metrics_address_host`](#-otelcol--metrics_address_host)
-* [`metrics_address_port`](#-otelcol--metrics_address_port)
+* [`metrics_mode`](#-otelcol--metrics_mode)
+* [`metrics_prometheus_host`](#-otelcol--metrics_prometheus_host)
+* [`metrics_prometheus_port`](#-otelcol--metrics_prometheus_port)
+* [`metrics_otlp_endpoint`](#-otelcol--metrics_otlp_endpoint)
+* [`metrics_otlp_protocol`](#-otelcol--metrics_otlp_protocol)
 * [`service_ensure`](#-otelcol--service_ensure)
 * [`service_enable`](#-otelcol--service_enable)
 * [`manage_service`](#-otelcol--manage_service)
@@ -219,21 +222,45 @@ Level for metrics config
 
 Default value: `'basic'`
 
-##### <a name="-otelcol--metrics_address_host"></a>`metrics_address_host`
+##### <a name="-otelcol--metrics_mode"></a>`metrics_mode`
 
-Data type: `Optional[Stdlib::Host]`
+Data type: `Enum['pull','push']`
 
-Host metrics are listening to
+Mode for metrics config either pull or push
 
-Default value: `undef`
+Default value: `'pull'`
 
-##### <a name="-otelcol--metrics_address_port"></a>`metrics_address_port`
+##### <a name="-otelcol--metrics_prometheus_host"></a>`metrics_prometheus_host`
+
+Data type: `Stdlib::Host`
+
+Host for internal telemetry Prometheus metrics
+
+Default value: `'0.0.0.0'`
+
+##### <a name="-otelcol--metrics_prometheus_port"></a>`metrics_prometheus_port`
 
 Data type: `Stdlib::Port`
 
-Port metrics are listening to
+Port for internal telemetry Prometheus metrics
 
 Default value: `8888`
+
+##### <a name="-otelcol--metrics_otlp_endpoint"></a>`metrics_otlp_endpoint`
+
+Data type: `Stdlib::HTTPSUrl`
+
+OTLP endpoint for internal telemetry metrics
+
+Default value: `'https://backend:4318'`
+
+##### <a name="-otelcol--metrics_otlp_protocol"></a>`metrics_otlp_protocol`
+
+Data type: `String[1]`
+
+OTLP protocol for internal telemetry metrics
+
+Default value: `'http/protobuf'`
 
 ##### <a name="-otelcol--service_ensure"></a>`service_ensure`
 

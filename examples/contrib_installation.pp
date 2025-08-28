@@ -36,7 +36,6 @@ otelcol::processor { 'batch':
 }
 
 class { 'otelcol':
-  manage_archive       => true,
-  package_name         => 'otelcol-contrib',
-  metrics_address_port => 8889,
+  manage_archive => true,
+  package_name   => 'otelcol-contrib',
 }
