@@ -18,8 +18,8 @@ describe 'otelcol' do
                                                                  'path' => '/etc/otelcol/config.yaml',
                                                                  'format' => 'yaml',
                                                                  'mode' => '0600',
-                                                                 'owner' => 'otelcol',
-                                                                 'group' => 'otelcol',
+                                                                 'owner' => 'otel',
+                                                                 'group' => 'otel',
                                                                })
           is_expected.to contain_concat__fragment('otelcol-config-header')
           is_expected.to contain_concat__fragment('otelcol-config-baseconfig')

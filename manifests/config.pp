@@ -12,7 +12,7 @@ class otelcol::config inherits otelcol {
   }
   $real_config_file_owner = ($otelcol::config_file_owner) ? {
     undef   => $package_default_username,
-    default => $real_config_file_owner
+    default => $otelcol::config_file_owner
   }
   $real_config_file_group = ($otelcol::config_file_group) ? {
     undef   => $package_default_username,
