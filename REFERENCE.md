@@ -136,7 +136,7 @@ Default value: `"/etc/${package_name}/config.yaml"`
 
 ##### <a name="-otelcol--config_file_owner"></a>`config_file_owner`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 owner of config_file
 
@@ -144,7 +144,7 @@ Default value: `undef`
 
 ##### <a name="-otelcol--config_file_group"></a>`config_file_group`
 
-Data type: `String`
+Data type: `Optional[String]`
 
 group of config_file
 
