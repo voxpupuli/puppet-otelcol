@@ -17,6 +17,7 @@ describe 'otelcol' do
           is_expected.to contain_concat('otelcol-config').with({
                                                                  'path' => '/etc/otelcol/config.yaml',
                                                                  'format' => 'yaml',
+                                                                 'mode' => '0600',
                                                                })
           is_expected.to contain_concat__fragment('otelcol-config-header')
           is_expected.to contain_concat__fragment('otelcol-config-baseconfig')
@@ -163,7 +164,7 @@ describe 'otelcol' do
           {
             config_file_owner: 'root',
             config_file_group: 'root',
-            config_file_mode: '0600',
+            config_file_mode: '0640',
           }
         end
 
@@ -173,7 +174,7 @@ describe 'otelcol' do
           is_expected.to contain_concat('otelcol-config').with(
             'owner' => 'root',
             'group' => 'root',
-            'mode'  => '0600'
+            'mode'  => '0640'
           )
         }
       end

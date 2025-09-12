@@ -63,7 +63,7 @@ class otelcol (
   String  $config_file                           = "/etc/${package_name}/config.yaml",
   String  $config_file_owner                     = 'root',
   String  $config_file_group                     = 'root',
-  Stdlib::Filemode $config_file_mode             = '0644',
+  Stdlib::Filemode $config_file_mode             = '0600',
   Array[String] $configs                         = [],
   Hash[String, Hash] $receivers = {},
   Hash[String, Hash] $processors = {},

@@ -156,7 +156,7 @@ Data type: `Stdlib::Filemode`
 
 mode of config_file
 
-Default value: `'0644'`
+Default value: `'0600'`
 
 ##### <a name="-otelcol--configs"></a>`configs`
 
