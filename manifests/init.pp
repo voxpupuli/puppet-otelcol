@@ -79,7 +79,7 @@ class otelcol (
   Boolean $manage_archive                        = false,
   String[1] $localpath_archive                   = '/tmp',
   # Boolean $manage_user                           = false,
-  String[1] $archive_version                     = '0.89.0',
+  String[1] $archive_version                     = '0.135.0',
   String[1] $archive_location          = "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64",
   Optional[Stdlib::Host] $proxy_host = undef,
   Stdlib::Port $proxy_port = 8888,
