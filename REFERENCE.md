@@ -277,7 +277,7 @@ Data type: `String[1]`
 
 Version of otelcol that will be used, param is not used if archive_location is set
 
-Default value: `'0.89.0'`
+Default value: `'0.135.0'`
 
 ##### <a name="-otelcol--archive_location"></a>`archive_location`
 
