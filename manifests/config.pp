@@ -4,6 +4,20 @@
 #
 class otelcol::config inherits otelcol {
   assert_private()
+
+  # due to inconsistent Naming in original packages, we need some handling here
+  $package_default_username = ($otelcol::service_name) ? {
+    'otelcol' => 'otel',
+    default   => $otelcol::service_name,
+  }
+  $real_config_file_owner = ($otelcol::config_file_owner) ? {
+    undef   => $package_default_username,
+    default => $otelcol::config_file_owner
+  }
+  $real_config_file_group = ($otelcol::config_file_group) ? {
+    undef   => $package_default_username,
+    default => $otelcol::config_file_group
+  }
   $proxy_host = $otelcol::proxy_host
   $proxy_port = $otelcol::proxy_port
   $metrics_readers = $otelcol::telemetry_exporters.map |Hash $hash_element| {
@@ -29,12 +43,13 @@ class otelcol::config inherits otelcol {
   }
 
   concat { 'otelcol-config' :
-    ensure => present,
-    path   => $otelcol::config_file,
-    format => 'yaml',
-    owner  => $otelcol::config_file_owner,
-    group  => $otelcol::config_file_group,
-    mode   => $otelcol::config_file_mode,
+    ensure  => present,
+    path    => $otelcol::config_file,
+    format  => 'yaml',
+    owner   => $real_config_file_owner,
+    group   => $real_config_file_group,
+    mode    => $otelcol::config_file_mode,
+    require => Package['otelcol'],
   }
   concat::fragment { 'otelcol-config-header' :
     target  => 'otelcol-config',
@@ -52,8 +67,8 @@ class otelcol::config inherits otelcol {
     ensure  => 'file',
     path    => $otelcol::environment_file,
     content => template('otelcol/environment.conf.erb'),
-    owner   => $otelcol::config_file_owner,
-    group   => $otelcol::config_file_group,
+    owner   => $real_config_file_owner,
+    group   => $real_config_file_group,
     mode    => $otelcol::config_file_mode,
   }
 
