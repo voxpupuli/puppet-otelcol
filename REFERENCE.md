@@ -140,7 +140,7 @@ Data type: `String`
 
 owner of config_file
 
-Default value: `$service_name`
+Default value: `undef`
 
 ##### <a name="-otelcol--config_file_group"></a>`config_file_group`
 
@@ -148,7 +148,7 @@ Data type: `String`
 
 group of config_file
 
-Default value: `$service_name`
+Default value: `undef`
 
 ##### <a name="-otelcol--config_file_mode"></a>`config_file_mode`
 
