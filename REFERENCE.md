@@ -599,8 +599,8 @@ Alias of
 
 ```puppet
 Struct[{
-    endpoint => Stdlib::HTTPSUrl,
-    protocol => String
+  endpoint => Stdlib::HTTPSUrl,
+  protocol => String
 }]
 ```
 
@@ -618,8 +618,8 @@ Alias of
 
 ```puppet
 Struct[{
-    host => Stdlib::Host,
-    port => Stdlib::Port,
+  host => Stdlib::Host,
+  port => Stdlib::Port,
 }]
 ```
 
