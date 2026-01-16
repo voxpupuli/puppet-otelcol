@@ -55,7 +55,7 @@
 #   Path to archive without filetype extension
 class otelcol (
   String  $package_name                          = 'otelcol',
-  Enum['present','absent','installed','latest']  $package_ensure       = 'installed',
+  Stdlib::Ensure::Package  $package_ensure       = 'installed',
   String  $service_name                          = $package_name,
   Boolean $service_configcheck                   = true,
   String  $environment_file                      = "/etc/${package_name}/${package_name}.conf",
