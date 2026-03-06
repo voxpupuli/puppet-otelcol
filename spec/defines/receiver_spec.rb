@@ -8,7 +8,7 @@ describe 'otelcol::receiver' do
     {
       'config' => {
         'key' => 'value',
-      }
+      },
     }
   end
 
