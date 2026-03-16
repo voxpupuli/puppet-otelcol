@@ -8,7 +8,7 @@ describe 'otelcol::processor' do
     {
       'config' => {
         'key' => 'value',
-      }
+      },
     }
   end
 

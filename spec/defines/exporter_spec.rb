@@ -8,7 +8,7 @@ describe 'otelcol::exporter' do
     {
       'config' => {
         'key' => 'value',
-      }
+      },
     }
   end
 

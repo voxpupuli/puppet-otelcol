@@ -10,7 +10,7 @@ describe 'otelcol::component' do
         'key' => 'value',
       },
       'type' => 'receivers',
-      'component_name' => 'otlp'
+      'component_name' => 'otlp',
     }
   end
 
@@ -20,7 +20,7 @@ describe 'otelcol::component' do
         'pipelines' => {
           'test' => {
             'receivers' => ['otlp'],
-          }
+          },
         },
       },
     }
@@ -80,7 +80,7 @@ describe 'otelcol::component' do
               'pipelines' => {
                 'test2' => {
                   'receivers' => ['otlp'],
-                }
+                },
               },
             },
           }
