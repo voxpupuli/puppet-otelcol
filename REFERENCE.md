@@ -84,6 +84,8 @@ Data type: `String`
 
 Name of the package used
 
+Default value: `'otelcol'`
+
 ##### <a name="-otelcol--package_ensure"></a>`package_ensure`
 
 Data type: `Enum['present','absent','installed','latest']`
@@ -153,6 +155,8 @@ Default value: `undef`
 Data type: `Stdlib::Filemode`
 
 mode of config_file
+
+Default value: `'0600'`
 
 ##### <a name="-otelcol--configs"></a>`configs`
 
@@ -265,11 +269,15 @@ Data type: `String[1]`
 
 Path where archive will be stored if managed
 
+Default value: `'/tmp'`
+
 ##### <a name="-otelcol--archive_version"></a>`archive_version`
 
 Data type: `String[1]`
 
 Version of otelcol that will be used, param is not used if archive_location is set
+
+Default value: `'0.135.0'`
 
 ##### <a name="-otelcol--archive_location"></a>`archive_location`
 
