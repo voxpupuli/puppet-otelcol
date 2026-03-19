@@ -29,7 +29,7 @@ describe 'Otelcol::Component::Name' do
         {},
         '',
         'memory_limiter/',
-        '/asd'
+        '/asd',
       ].each do |value|
         describe value.inspect do
           it { is_expected.not_to allow_value(value) }

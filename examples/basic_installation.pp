@@ -16,7 +16,7 @@ otelcol::receiver { 'prometheus' :
           'job_name'        => 'otel-collector',
           'scrape_interval' => '10s',
           'static_configs'  => [
-            { 'targets' => ['localhost:8888'] }
+            { 'targets' => ['localhost:8888'] },
           ],
         },
       ],

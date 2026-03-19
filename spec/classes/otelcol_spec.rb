@@ -230,7 +230,7 @@ describe 'otelcol' do
           is_expected.to contain_concat('otelcol-config').with(
             'owner' => 'root',
             'group' => 'root',
-            'mode'  => '0640'
+            'mode'  => '0640',
           )
         }
       end
@@ -359,7 +359,7 @@ describe 'otelcol' do
             'service' => {
               'telemetry' => {
                 'logs' => {
-                  'level' => 'debug'
+                  'level' => 'debug',
                 },
                 'metrics' => {
                   'level' => 'basic',
@@ -368,7 +368,7 @@ describe 'otelcol' do
                   ],
                 },
               },
-            }
+            },
           }
         end
 
@@ -394,7 +394,7 @@ describe 'otelcol' do
                   ],
                 },
               },
-            }
+            },
           }
         end
 
@@ -407,7 +407,7 @@ describe 'otelcol' do
           {
             telemetry_exporters: [
               { 'prometheus' => { 'host' => '0.0.0.0', 'port' => 8888 } },
-              { 'otlp' => { 'endpoint' => 'https://example.org', 'protocol' => 'http/protobuf' } }
+              { 'otlp' => { 'endpoint' => 'https://example.org', 'protocol' => 'http/protobuf' } },
             ],
           }
         end
@@ -424,7 +424,7 @@ describe 'otelcol' do
                   ],
                 },
               },
-            }
+            },
           }
         end
 
@@ -552,7 +552,7 @@ describe 'otelcol' do
         let :params do
           {
             manage_archive: true,
-            archive_version: '0.132.4'
+            archive_version: '0.132.4',
           }
         end
 
