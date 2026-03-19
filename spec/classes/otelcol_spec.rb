@@ -10,30 +10,37 @@ describe 'otelcol' do
       end
 
       context 'default include' do
+        let(:os_defaults) do
+          case facts[:os]['family']
+          when 'windows'
+            {
+              configpath: 'C:/Program Files/OpenTelemetry Collector/config.yaml',
+              configowner: 'NT AUTHORITY\SYSTEM',
+              configgroup: 'Administrators',
+              configfilemode: '0770',
+              package_name: 'OpenTelemetry Collector (0.135.0) - otelcol distribution',
+            }
+          else
+            {
+              configpath: '/etc/otelcol/config.yaml',
+              configowner: 'otel',
+              configgroup: 'otel',
+              configfilemode: '0600',
+              package_name: 'otelcol',
+            }
+          end
+        end
+
         it { is_expected.to compile.with_all_deps }
 
-        case facts[:os]['family']
-        when 'windows'
-          let(:configpath) { 'C:/Program Files/OpenTelemetry Collector/config.yaml' }
-          let(:configowner) { 'NT AUTHORITY\SYSTEM' }
-          let(:configgroup) { 'Administrators' }
-          let(:configfilemode) { '0770' }
-          let(:package_name) { 'OpenTelemetry Collector (0.135.0) - otelcol distribution' }
-        else
-          let(:configpath) { '/etc/otelcol/config.yaml' }
-          let(:configowner) { 'otel' }
-          let(:configgroup) { 'otel' }
-          let(:configfilemode) { '0600' }
-          let(:package_name) { 'otelcol' }
-        end
         it {
           is_expected.to contain_class('otelcol::config')
           is_expected.to contain_concat('otelcol-config').with({
-                                                                 'path' => configpath,
+                                                                 'path' => os_defaults[:configpath],
                                                                  'format' => 'yaml',
-                                                                 'mode' => configfilemode,
-                                                                 'owner' => configowner,
-                                                                 'group' => configgroup,
+                                                                 'mode' => os_defaults[:configfilemode],
+                                                                 'owner' => os_defaults[:configowner],
+                                                                 'group' => os_defaults[:configgroup],
                                                                })
           is_expected.to contain_concat__fragment('otelcol-config-header')
           is_expected.to contain_concat__fragment('otelcol-config-baseconfig')
@@ -50,7 +57,7 @@ describe 'otelcol' do
         it {
           is_expected.to contain_class('otelcol::install')
           is_expected.to contain_package('otelcol').with_ensure('installed')
-          is_expected.to contain_package('otelcol').with_name(package_name)
+          is_expected.to contain_package('otelcol').with_name(os_defaults[:package_name])
         }
 
         it {
@@ -67,26 +74,32 @@ describe 'otelcol' do
           }
         end
 
-        case facts[:os]['family']
-        when 'windows'
-          let(:configpath) { 'C:/Program Files/OpenTelemetry Collector/config.yaml' }
-          let(:configowner) { 'NT AUTHORITY\SYSTEM' }
-          let(:configgroup) { 'Administrators' }
-          let(:configfilemode) { '0770' }
-          let(:package_name) { 'OpenTelemetry Collector (0.135.0) - otelcol-contrib distribution' }
-        else
-          let(:configpath) { '/etc/otelcol-contrib/config.yaml' }
-          let(:configowner) { 'otelcol-contrib' }
-          let(:configgroup) { 'otelcol-contrib' }
-          let(:configfilemode) { '0600' }
-          let(:package_name) { 'otelcol-contrib' }
+        let(:os_contrib_defaults) do
+          case facts[:os]['family']
+          when 'windows'
+            {
+              configpath: 'C:/Program Files/OpenTelemetry Collector/config.yaml',
+              configowner: 'NT AUTHORITY\SYSTEM',
+              configgroup: 'Administrators',
+              configfilemode: '0770',
+              package_name: 'OpenTelemetry Collector (0.135.0) - otelcol-contrib distribution',
+            }
+          else
+            {
+              configpath: '/etc/otelcol-contrib/config.yaml',
+              configowner: 'otelcol-contrib',
+              configgroup: 'otelcol-contrib',
+              configfilemode: '0600',
+              package_name: 'otelcol-contrib',
+            }
+          end
         end
 
         it { is_expected.to compile.with_all_deps }
 
         it {
           is_expected.to contain_class('otelcol::config')
-          is_expected.to contain_concat('otelcol-config').with_path(configpath)
+          is_expected.to contain_concat('otelcol-config').with_path(os_contrib_defaults[:configpath])
           # is_expected.to contain_file('otelcol-config').with_content(%r{"otlp":\s\{\s"protocols":\s\{\s"http":})
         }
 
@@ -99,11 +112,11 @@ describe 'otelcol' do
 
         it { # Validate YAML for config
           is_expected.to contain_concat('otelcol-config').with({
-                                                                 'path' => configpath,
+                                                                 'path' => os_contrib_defaults[:configpath],
                                                                  'format' => 'yaml',
-                                                                 'mode' => configfilemode,
-                                                                 'owner' => configowner,
-                                                                 'group' => configgroup,
+                                                                 'mode' => os_contrib_defaults[:configfilemode],
+                                                                 'owner' => os_contrib_defaults[:configowner],
+                                                                 'group' => os_contrib_defaults[:configgroup],
                                                                })
           # .with_content(configcontent.to_yaml)
           # yaml_object = YAML.load(catalogue.resource('file', 'otelcol-config').send(:parameters)[:content])
@@ -113,7 +126,7 @@ describe 'otelcol' do
         it {
           is_expected.to contain_class('otelcol::install')
           is_expected.to contain_package('otelcol').with_ensure('installed')
-          is_expected.to contain_package('otelcol').with_name(package_name)
+          is_expected.to contain_package('otelcol').with_name(os_contrib_defaults[:package_name])
           is_expected.to contain_service('otelcol').with_name('otelcol-contrib')
         }
 
@@ -126,14 +139,11 @@ describe 'otelcol' do
           end
 
           let(:package_source) do
-            case facts[:os]['family']
-            when 'Debian'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol-contrib_0.135.0_linux_amd64.deb'
-            when 'RedHat'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol-contrib_0.135.0_linux_amd64.rpm'
-            when 'windows'
-              'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol-contrib_0.135.0_windows_x64.msi'
-            end
+            {
+              'Debian' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol-contrib_0.135.0_linux_amd64.deb',
+              'RedHat' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol-contrib_0.135.0_linux_amd64.rpm',
+              'windows' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol-contrib_0.135.0_windows_x64.msi',
+            }[facts[:os]['family']]
           end
           let(:package_localpath) do
             case facts[:os]['family']
@@ -206,7 +216,7 @@ describe 'otelcol' do
         context 'with configs' do
           let :params do
             {
-              configs: ['customconfig.yaml', 'env:MY_CONFIG_IN_AN_ENVVAR', 'https://server/config.yaml', '"yaml:exporters::debug::verbosity: normal"']
+              configs: ['customconfig.yaml', 'env:MY_CONFIG_IN_AN_ENVVAR', 'https://server/config.yaml', '"yaml:exporters::debug::verbosity: normal"'],
             }
           end
 
@@ -489,7 +499,7 @@ describe 'otelcol' do
               '/bin',
               '%PROGRAMFILES%\OpenTelemetry Collector',
               'C:/Program Files/OpenTelemetry Collector',
-            ]
+            ],
           )
         }
       end
@@ -525,14 +535,11 @@ describe 'otelcol' do
         end
 
         let(:package_source) do
-          case facts[:os]['family']
-          when 'Debian'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol_0.135.0_linux_amd64.deb'
-          when 'RedHat'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol_0.135.0_linux_amd64.rpm'
-          when 'windows'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol_0.135.0_windows_x64.msi'
-          end
+          {
+            'Debian' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol_0.135.0_linux_amd64.deb',
+            'RedHat' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol_0.135.0_linux_amd64.rpm',
+            'windows' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.135.0/otelcol_0.135.0_windows_x64.msi',
+          }[facts[:os]['family']]
         end
         let(:package_localpath) do
           case facts[:os]['family']
@@ -557,14 +564,11 @@ describe 'otelcol' do
         end
 
         let(:package_source) do
-          case facts[:os]['family']
-          when 'Debian'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_linux_amd64.deb'
-          when 'RedHat'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_linux_amd64.rpm'
-          when 'windows'
-            'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_windows_x64.msi'
-          end
+          {
+            'Debian' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_linux_amd64.deb',
+            'RedHat' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_linux_amd64.rpm',
+            'windows' => 'https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.132.4/otelcol_0.132.4_windows_x64.msi',
+          }[facts[:os]['family']]
         end
         let(:package_localpath) do
           case facts[:os]['family']
