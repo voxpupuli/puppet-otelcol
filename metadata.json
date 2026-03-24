@@ -27,7 +27,10 @@
     },
     {
       "operatingsystem": "OracleLinux",
-      "operatingsystemrelease": ["8", "9"]
+      "operatingsystemrelease": [
+        "8",
+        "9"
+      ]
     },
     {
       "operatingsystem": "RedHat",
@@ -39,7 +42,11 @@
     },
     {
       "operatingsystem": "Scientific",
-      "operatingsystemrelease": ["7", "8", "9"]
+      "operatingsystemrelease": [
+        "7",
+        "8",
+        "9"
+      ]
     },
     {
       "operatingsystem": "Debian",
@@ -58,7 +65,10 @@
     },
     {
       "operatingsystem": "Windows",
-      "operatingsystemrelease": ["2019", "2022"]
+      "operatingsystemrelease": [
+        "2019",
+        "2022"
+      ]
     }
   ],
   "requirements": [
