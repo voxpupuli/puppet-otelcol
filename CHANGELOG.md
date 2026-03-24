@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.0.0](https://github.com/voxpupuli/puppet-otelcol/tree/v3.0.0) (2026-03-24)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-otelcol/compare/v2.0.0...v3.0.0)
+
+**Breaking changes:**
+
+- Add Support for Debian 13, RHEL 10, drop support for Debian 10, Ubunt… [\#45](https://github.com/voxpupuli/puppet-otelcol/pull/45) ([voxel01](https://github.com/voxel01))
+
+**Implemented enhancements:**
+
+- Implement Windows support [\#44](https://github.com/voxpupuli/puppet-otelcol/pull/44) ([cyberkov](https://github.com/cyberkov))
+
 ## [v2.0.0](https://github.com/voxpupuli/puppet-otelcol/tree/v2.0.0) (2025-09-12)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-otelcol/compare/v1.0.0...v2.0.0)
