@@ -62,6 +62,13 @@
         "22.04",
         "24.04"
       ]
+    },
+    {
+      "operatingsystem": "Windows",
+      "operatingsystemrelease": [
+        "2019",
+        "2022"
+      ]
     }
   ],
   "requirements": [

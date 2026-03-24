@@ -18,15 +18,24 @@
 class otelcol::service (
   Stdlib::Ensure::Service $ensure            = $otelcol::service_ensure,
   Boolean $enable                            = $otelcol::service_enable,
-  String  $config_check_command              = "${otelcol::service_name} validate --config=${otelcol::config_file}",
+  Optional[String] $config_check_command     = undef,
   Boolean $config_check                      = $otelcol::service_configcheck,
 ) {
   # include install
   include otelcol::install
 
   if $config_check {
+    if $config_check_command {
+      $_config_check_command = $config_check_command
+    } else {
+      $_config_check_command = case $facts['os']['family'] {
+        'windows': { "${otelcol::service_name}.exe validate --config=\"${otelcol::config_file}\"" }
+        default: { "${otelcol::service_name} validate --config=\"${otelcol::config_file}\"" }
+      }
+    }
+
     exec { 'otelcol_config_check':
-      command     => $config_check_command,
+      command     => $_config_check_command,
       refreshonly => true,
       path        => [
         '/usr/local/sbin',
@@ -35,6 +44,8 @@ class otelcol::service (
         '/usr/bin',
         '/sbin',
         '/bin',
+        '%PROGRAMFILES%\\OpenTelemetry Collector',
+        'C:/Program Files/OpenTelemetry Collector',
       ],
     }
   }
@@ -49,6 +60,6 @@ class otelcol::service (
     enable    => $enable,
     name      => $otelcol::service_name,
     require   => $service_require,
-    subscribe => [Concat['otelcol-config'], File['otelcol-environment']],
+    subscribe => [Concat['otelcol-config']],
   }
 }

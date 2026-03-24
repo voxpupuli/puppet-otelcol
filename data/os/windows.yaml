@@ -1,5 +1,6 @@
 ---
-otelcol::config_file: C:/Program Files/otelcol/otelcol.conf
-otelcol::config_file_owner: Administrator
+otelcol::config_file: C:/Program Files/OpenTelemetry Collector/config.yaml
+otelcol::config_file_owner: 'NT AUTHORITY\SYSTEM'
 otelcol::config_file_group: Administrators
-...
+otelcol::localpath_archive: 'C:/Windows/Temp'
+otelcol::config_file_mode: '0770'

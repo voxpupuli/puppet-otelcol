@@ -63,13 +63,18 @@ class otelcol::config inherits otelcol {
     content => stdlib::to_yaml($component),
   }
 
-  file { 'otelcol-environment' :
-    ensure  => 'file',
-    path    => $otelcol::environment_file,
-    content => template('otelcol/environment.conf.erb'),
-    owner   => $real_config_file_owner,
-    group   => $real_config_file_group,
-    mode    => $otelcol::config_file_mode,
+  unless $facts['os']['family'] == 'windows' {
+    file { 'otelcol-environment' :
+      ensure  => 'file',
+      path    => $otelcol::environment_file,
+      content => template('otelcol/environment.conf.erb'),
+      owner   => $real_config_file_owner,
+      group   => $real_config_file_group,
+      mode    => $otelcol::config_file_mode,
+    }
+    if $otelcol::manage_service {
+      File['otelcol-environment'] ~> Service['otelcol']
+    }
   }
 
   $otelcol::receivers.each |String $rname, Hash $rvalue| {

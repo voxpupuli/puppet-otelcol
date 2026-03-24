@@ -54,7 +54,10 @@
 # @param archive_location
 #   Path to archive without filetype extension
 class otelcol (
-  String  $package_name                          = 'otelcol',
+  String  $package_name,
+  String[1] $localpath_archive,
+  String[1] $archive_version,
+  Stdlib::Filemode $config_file_mode,
   Enum['present','absent','installed','latest']  $package_ensure       = 'installed',
   String  $service_name                          = $package_name,
   Boolean $service_configcheck                   = true,
@@ -63,7 +66,6 @@ class otelcol (
   String  $config_file                           = "/etc/${package_name}/config.yaml",
   Optional[String]  $config_file_owner           = undef,
   Optional[String]  $config_file_group           = undef,
-  Stdlib::Filemode $config_file_mode             = '0600',
   Array[String] $configs                         = [],
   Hash[String, Hash] $receivers = {},
   Hash[String, Hash] $processors = {},
@@ -77,14 +79,23 @@ class otelcol (
   Boolean $service_enable                        = true,
   Boolean $manage_service                        = true,
   Boolean $manage_archive                        = false,
-  String[1] $localpath_archive                   = '/tmp',
-  # Boolean $manage_user                           = false,
-  String[1] $archive_version                     = '0.135.0',
-  String[1] $archive_location          = "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${archive_version}/${package_name}_${archive_version}_linux_amd64",
+  Optional[String[1]] $archive_location = undef,
   Optional[Stdlib::Host] $proxy_host = undef,
   Stdlib::Port $proxy_port = 8888,
 ) {
-  contain otelcol::install
+  $_archive_location = if $archive_location {
+    $archive_location
+  }
+  else {
+    case $facts['os']['family'] {
+      'windows': { "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${otelcol::archive_version}/${otelcol::package_name}_${otelcol::archive_version}_windows_x64" }
+      default: { "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v${otelcol::archive_version}/${otelcol::package_name}_${otelcol::archive_version}_linux_amd64" }
+    }
+  }
+
+  class { 'otelcol::install':
+    archive_location   => $_archive_location,
+  }
   contain otelcol::config
 
   if($manage_service) {
