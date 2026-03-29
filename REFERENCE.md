@@ -20,6 +20,7 @@
 
 #### Public Defined types
 
+* [`otelcol::connector`](#otelcol--connector): Add a connector to the OpenTelemetry Collector configuration
 * [`otelcol::exporter`](#otelcol--exporter): Define a OpenTelemetry Collector exporter
 * [`otelcol::extension`](#otelcol--extension): Add an extension to the OpenTelemetry Collector configuration
 * [`otelcol::pipeline`](#otelcol--pipeline): Add a pipeline to the OpenTelemetry Collector configuration
@@ -63,6 +64,7 @@ The following parameters are available in the `otelcol` class:
 * [`receivers`](#-otelcol--receivers)
 * [`processors`](#-otelcol--processors)
 * [`exporters`](#-otelcol--exporters)
+* [`connectors`](#-otelcol--connectors)
 * [`pipelines`](#-otelcol--pipelines)
 * [`extensions`](#-otelcol--extensions)
 * [`log_options`](#-otelcol--log_options)
@@ -188,6 +190,14 @@ Default value: `{}`
 Data type: `Hash[String, Hash]`
 
 Hash for exporters config
+
+Default value: `{}`
+
+##### <a name="-otelcol--connectors"></a>`connectors`
+
+Data type: `Hash[String, Hash]`
+
+Hash for connectors config
 
 Default value: `{}`
 
@@ -329,6 +339,74 @@ Data type: `Any`
 Path to archive without filetype extension
 
 ## Defined types
+
+### <a name="otelcol--connector"></a>`otelcol::connector`
+
+Connectors are used to connect two pipelines. A connector acts as both an exporter
+(at the end of one pipeline) and a receiver (at the start of another pipeline).
+
+#### Examples
+
+##### basic connector
+
+```puppet
+otelcol::connector { 'namevar': }
+```
+
+##### Define a connector that converts traces to metrics
+
+```puppet
+otelcol::connector { 'count':
+  exporter_pipelines => ['traces'],
+  receiver_pipelines => ['metrics'],
+}
+```
+
+#### Parameters
+
+The following parameters are available in the `otelcol::connector` defined type:
+
+* [`name`](#-otelcol--connector--name)
+* [`config`](#-otelcol--connector--config)
+* [`order`](#-otelcol--connector--order)
+* [`exporter_pipelines`](#-otelcol--connector--exporter_pipelines)
+* [`receiver_pipelines`](#-otelcol--connector--receiver_pipelines)
+
+##### <a name="-otelcol--connector--name"></a>`name`
+
+The name of the connector
+
+##### <a name="-otelcol--connector--config"></a>`config`
+
+Data type: `Hash`
+
+The configuration of the connector
+
+Default value: `{}`
+
+##### <a name="-otelcol--connector--order"></a>`order`
+
+Data type: `Integer[0,999]`
+
+The order of the connector
+
+Default value: `0`
+
+##### <a name="-otelcol--connector--exporter_pipelines"></a>`exporter_pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines where the connector is used as an exporter (data flows out)
+
+Default value: `[]`
+
+##### <a name="-otelcol--connector--receiver_pipelines"></a>`receiver_pipelines`
+
+Data type: `Array[String[1]]`
+
+The pipelines where the connector is used as a receiver (data flows in)
+
+Default value: `[]`
 
 ### <a name="otelcol--exporter"></a>`otelcol::exporter`
 

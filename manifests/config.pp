@@ -102,6 +102,15 @@ class otelcol::config inherits otelcol {
     }
   }
 
+  $otelcol::connectors.each |String $rname, Hash $rvalue| {
+    if $rvalue['config'] =~ Hash {
+      ensure_resource('otelcol::connector', $rname, $rvalue)
+    }
+    else {
+      ensure_resource('otelcol::connector', $rname, { 'config' => $rvalue })
+    }
+  }
+
   $otelcol::pipelines.each |String $rname, Hash $rvalue| {
     if $rvalue['config'] =~ Hash {
       ensure_resource('otelcol::pipeline', $rname, $rvalue)
