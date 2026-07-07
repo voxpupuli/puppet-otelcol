@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v3.1.0](https://github.com/voxpupuli/puppet-otelcol/tree/v3.1.0) (2026-07-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-otelcol/compare/v3.0.0...v3.1.0)
+
+**Implemented enhancements:**
+
+- Add connector support to OpenTelemetry Collector [\#51](https://github.com/voxpupuli/puppet-otelcol/pull/51) ([cyberkov](https://github.com/cyberkov))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-otelcol/tree/v3.0.0) (2026-03-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-otelcol/compare/v2.0.0...v3.0.0)
