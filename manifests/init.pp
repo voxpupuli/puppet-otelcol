@@ -29,6 +29,8 @@
 #   Hash for processors config
 # @param exporters
 #   Hash for exporters config
+# @param connectors
+#   Hash for connectors config
 # @param pipelines
 #   Hash for pipelines config
 # @param extensions
@@ -70,6 +72,7 @@ class otelcol (
   Hash[String, Hash] $receivers = {},
   Hash[String, Hash] $processors = {},
   Hash[String, Hash] $exporters = {},
+  Hash[String, Hash] $connectors = {},
   Hash[String, Hash] $pipelines = {},
   Hash[String, Hash] $extensions = {},
   Variant[Hash,String[1]]    $log_options                            = {},
